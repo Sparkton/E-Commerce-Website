@@ -8,13 +8,9 @@ import com.godrej.model.User;
 
 public class UserDaoImpl implements UserDao{
 
-	public static List<User> userList = new ArrayList<User>();
+	private static List<User> userList = new ArrayList<User>();
 	private List<User> tempList = new ArrayList<User>();
 	static int ctr=0;
-	final String JDBC_Driver = "oracle.jdbc.driver.OracleDriver";
-    final String USER = "system";
-    final String PASS = "seema@2019";
-
 	public List<User> getUserList() {
 		return userList;
 	}

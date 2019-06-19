@@ -2,7 +2,6 @@ package com.godrej.client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Statement;
 import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
@@ -25,9 +24,8 @@ public class TrialDatabase extends HttpServlet {
 		out.println("<p>Test for database</p><br>");
 		try{
 			Class.forName(util.getJDBC_Driver());
-			Statement stmt =util.getConn().createStatement();
 			String sql = "SELECT * FROM Persons";
-			ResultSet rs =stmt.executeQuery(sql);
+			ResultSet rs =util.getStmt().executeQuery(sql);
 			while(rs.next()){
 				int id  = rs.getInt("PERSONID");
 				String first = rs.getString("FIRSTNAME");
@@ -42,7 +40,7 @@ public class TrialDatabase extends HttpServlet {
 				out.println(" City: " + city + "<br>");
 			}
 			out.println("</body></html>");
-			util.getConn().close();
+			util.getStmt().close();
 		}
 		catch(Exception e){
 			System.out.println("Error occured");
