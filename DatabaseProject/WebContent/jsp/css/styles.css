@@ -1,0 +1,101 @@
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+}
+
+thead {
+	background-color: tomato;
+}
+
+body {
+	color: #000000;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-width: 0;
+	margin-height: 0;
+	background-color: #A3A6BA;
+	text-align: center;
+}
+
+p {
+	background-color: DodgerBlue;
+	height: 50px;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 3px 5px 9px 1px black;
+}
+
+.button {
+	background-color: #8a4caf;
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
+form {
+	margin: auto;
+	width: 100%;
+	text-align: "center"
+}
+
+.navbar {
+	overflow: hidden;
+	background-color: #333;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.navbar a {
+	float: left;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+.ak {
+	margin-right: 15px;
+	margin-top: 10px;
+	background-color: #8a4caf;
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+input {
+	vertical-align: middle;
+	display: flex;
+}
+
+.form-container .btn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	margin-bottom: 10px;
+	opacity: 0.8;
+}
+
+.form-container .cancel {
+	background-color: red;
+}
+
+.form-container .btn:hover, .open-button:hover {
+	opacity: 1;
+}

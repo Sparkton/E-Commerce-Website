@@ -1,0 +1,51 @@
+	.navbar {
+		overflow: hidden;
+		background-color: #333;
+		position: fixed; 
+		top: 0; 
+		width: 100%; 
+	}
+
+	.navbar a {
+	  float: left;
+	  display: block;
+	  color: #f2f2f2;
+	  text-align: left;
+	  padding: 14px 16px;
+	  text-decoration: none;
+	}
+	form{
+		margin: auto;
+		width: 50%; 
+		text-align: "center"
+	}
+	.button {
+		background-color: #8a4caf;
+		border: none;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+	}
+	form {
+		display: block;
+		margin-top: 0em;
+	}
+	.img {
+    position: relative;
+    float: left;
+    width:  auto;
+    height: 400px;
+    background-position: 100% 100%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+	}
+	input {
+    vertical-align:right;
+	display: flex;
+	}
+	label{
+		vertical-align:left;
+		display: flex;
+	}
