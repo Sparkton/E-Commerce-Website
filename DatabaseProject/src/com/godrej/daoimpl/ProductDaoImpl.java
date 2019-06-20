@@ -1,10 +1,14 @@
 package com.godrej.daoimpl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.godrej.dao.ProductDao;
 import com.godrej.model.Product;
+import com.godrej.util.DbConnection;
 
 public class ProductDaoImpl implements ProductDao{
 	
@@ -56,26 +60,43 @@ public class ProductDaoImpl implements ProductDao{
 	}
 	@Override
 	public boolean insert(Product product) {
-		if(!pdtList.isEmpty())
-			for(Product i:pdtList) {
-				if(i.getProduct_Name().equals(product.getProduct_Name())) { 
-					System.out.println("\nNot Valid");
-					return false;
-				}
-				else {
-					System.out.println("Entry Successful in Dao");
-					ctr+=1;
-					product.setProduct_Id(ctr);
-					pdtList.add(product);	
+		ctr+=1;
+		DbConnection util = new DbConnection();
+		int check;
+		Connection conn = util.getConn();
+		Statement stmt = null;
+		try {
+			Class.forName(util.getJDBC_Driver());
+			stmt = conn.createStatement();
+			PreparedStatement ps = util.getConn().prepareStatement("insert into product values(?,?,?,?)");
+			if(stmt.executeUpdate("Select * from Product WHERE PID = '"+ product.getProduct_Id()+"'")==0) {
+				ps.setInt(1, ctr);
+				ps.setString(2, product.getProduct_Name());
+				ps.setString(3, product.getProduct_Cat());
+				ps.setInt(4, product.getProduct_Price());
+				check = ps.executeUpdate();
+				if(check==1)
 					return true;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			ctr-=1;
+			return false;
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
 				}
+				if(stmt != null) {
+					stmt.close();
+				}
+				/*
+				 * if(rs != null) { rs.close(); }
+				 */
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			else {
-				ctr+=1;
-				product.setProduct_Id(ctr);
-				pdtList.add(product);	
-				return true;
-			}
+		}
 		return false;
 	}
 	@Override

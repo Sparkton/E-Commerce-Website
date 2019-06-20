@@ -1,6 +1,9 @@
 package com.godrej.client;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.godrej.dao.UserDao;
 import com.godrej.daoimpl.UserDaoImpl;
 import com.godrej.model.User;
+import com.godrej.util.DbConnection;
 
 
 /**
@@ -27,32 +31,73 @@ public class NewLogin extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserDao userDao = new UserDaoImpl();
 		String uName = request.getParameter("uName");
 		String uPass = request.getParameter("pass");
-		List<User> tempList = new ArrayList<User>();
-		tempList = userDao.search(1,uName);
-		if(tempList.isEmpty() || tempList == null)
-			response.sendRedirect("jsp/Login.jsp");
-		for(User user:tempList) {
-			if(user.getuPass().equals(uPass)) {
-				
-				  request.setAttribute("ID", user.getUserId()); 
-				  request.setAttribute("uName",user.getuName()); 
-				  request.setAttribute("uPass", user.getuPass());
-				  request.setAttribute("State", user.getAddress().getState());
-				  request.setAttribute("City", user.getAddress().getCity());
-				  request.setAttribute("Pincode", user.getAddress().getPinCode());
-				  RequestDispatcher rd = request.getRequestDispatcher("DisplaySingle");
-				  rd.forward(request, response);
+		DbConnection util = new DbConnection();
+		Connection conn = util.getConn();
+		Statement stmt = null;
+		try {
+			stmt = conn.createStatement();
+			String sql = "select * from Login where EMAILID = "+uName+" AND PASS = "+uPass;
+			int i = stmt.executeUpdate(sql);
+			if(i==1){
+				ResultSet rs = stmt.executeQuery("select * from Users where EMAILID = "+uName+" AND PASS = "+uPass);
+				request.setAttribute("ID", rs.getInt("USERID")); 
+				request.setAttribute("uName",rs.getString("EMAIL")); 
+				request.setAttribute("uPass", rs.getString("Pass"));
+				request.setAttribute("State",rs.getString("State"));
+				request.setAttribute("City", rs.getString("City"));
+				request.setAttribute("Pincode", rs.getInt("Pin"));
+				if(rs.getInt("isAdmin")==1) {
+					RequestDispatcher rd = request.getRequestDispatcher("StartUpPage");//Send to Admin Page
+					rd.forward(request, response);
+				}
+				else {
+					RequestDispatcher rd = request.getRequestDispatcher("");//Semd to normal page, figure it out
+					rd.forward(request, response);
+				}
 			}
 			else {
-				user=null;
-				response.getWriter().print("UserName/Password incorrect");
-				break;
+				System.out.println("Wrong Input/Password");
 			}
-			
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
+		finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+				if(stmt != null) {
+					stmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//		List<User> tempList = new ArrayList<User>();
+		//		tempList = userDao.search(1,uName);
+		//		if(tempList.isEmpty() || tempList == null)
+		//			response.sendRedirect("jsp/Login.jsp");
+		//		for(User user:tempList) {
+		//			if(user.getuPass().equals(uPass)) {
+		//				
+		//				  request.setAttribute("ID", user.getUserId()); 
+		//				  request.setAttribute("uName",user.getuName()); 
+		//				  request.setAttribute("uPass", user.getuPass());
+		//				  request.setAttribute("State", user.getAddress().getState());
+		//				  request.setAttribute("City", user.getAddress().getCity());
+		//				  request.setAttribute("Pincode", user.getAddress().getPinCode());
+		//				  RequestDispatcher rd = request.getRequestDispatcher("DisplaySingle");
+		//				  rd.forward(request, response);
+		//			}
+		//			else {
+		//				user=null;
+		//				response.getWriter().print("UserName/Password incorrect");
+		//				break;
+		//			}
+		//			
+		//		}
 	}
 }
 

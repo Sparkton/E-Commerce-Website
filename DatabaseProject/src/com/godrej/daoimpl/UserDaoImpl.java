@@ -1,16 +1,22 @@
 package com.godrej.daoimpl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.godrej.dao.UserDao;
+import com.godrej.model.Address;
 import com.godrej.model.User;
-
+import com.godrej.util.DbConnection;
 
 public class UserDaoImpl implements UserDao{
 
 	private static List<User> userList = new ArrayList<User>();
 	private List<User> tempList = new ArrayList<User>();
 	static int ctr=0;
+	DbConnection util = new DbConnection();
 	public List<User> getUserList() {
 		return userList;
 	}
@@ -18,115 +24,338 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public List<User> search(int ch, String s) {
 		tempList.clear();
-		
-			if(userList.isEmpty())
+		Connection conn = util.getConn();
+		Statement stmt = null;
+		try {
+			Class.forName(util.getJDBC_Driver());
+			stmt = conn.createStatement();
+			if(stmt.executeUpdate("select count(1) where exists (select * from Users)") == 1)
 				System.out.println("List Empty");
 			else {
-				int ctr=0;
+				int flag1=0;
+				ResultSet rs;
 				switch (ch) {
 				case 1:
-					for(User user:userList)
-						if(user.getuName().equals(s)) {
-							tempList.add(user);
-							ctr=1;
-						}
+					rs = stmt.executeQuery("select * from Users Where EMAIL ='"+s+"'");
+					while(rs.next()) {
+						User user = new User();
+						Address address = new Address();
+						user.setUserId(rs.getInt("USERID"));
+						user.setuName(rs.getString("EMAIL"));
+						user.setuPass(rs.getString("Pass"));
+						address.setState(rs.getString("State"));
+						address.setCity(rs.getString("City"));
+						address.setPinCode(rs.getInt("Pin"));
+						user.setAddress(address);
+						tempList.add(user);
+						flag1=1;
+					}
 					break;
+					//					for(User user:userList)
+					//						if(user.getuName().equals(s)) {
+					//							tempList.add(user);
+					//							ctr=1;
+					//						}
 				case 2:
-					for(User user:userList)
-						if(user.getAddress().getState()==s || user.getAddress().getCity()==s) {
-							tempList.add(user);
-							ctr=1;
-						}
+					rs = stmt.executeQuery("select * from Users Where State ='"+s+"'");
+					while(rs.next()) {
+						User user = new User();
+						Address address = new Address();
+						user.setUserId(rs.getInt("USERID"));
+						user.setuName(rs.getString("EMAIL"));
+						user.setuPass(rs.getString("Pass"));
+						address.setState(rs.getString("State"));
+						address.setCity(rs.getString("City"));
+						address.setPinCode(rs.getInt("Pin"));
+						user.setAddress(address);
+						tempList.add(user);
+						flag1=1;
+					}
 					break;
+					//					for(User user:userList)
+					//						if(user.getAddress().getState()==s || user.getAddress().getCity()==s) {
+					//							tempList.add(user);
+					//							ctr=1;
+					//						}
 				case 3:
-					for(User user:userList)
-						if(user.getAddress().getPinCode()==Integer.parseInt(s)) {
-							tempList.add(user);
-							ctr=1;
-						}
+					rs = stmt.executeQuery("select * from Users Where Pin ='"+Integer.parseInt(s)+"'");
+					while(rs.next()) {
+						User user = new User();
+						Address address = new Address();
+						user.setUserId(rs.getInt("USERID"));
+						user.setuName(rs.getString("EMAIL"));
+						user.setuPass(rs.getString("Pass"));
+						address.setState(rs.getString("State"));
+						address.setCity(rs.getString("City"));
+						address.setPinCode(rs.getInt("Pin"));
+						user.setAddress(address);
+						tempList.add(user);
+						flag1=1;
+					}
 					break;
+					//					for(User user:userList)
+					//						if(user.getAddress().getPinCode()==Integer.parseInt(s)) {
+					//							tempList.add(user);
+					//							ctr=1;
+					//						}
 				default: System.out.println("\nNot Found");
 				}
-				if(ctr==0)
+				if(flag1==0)
 					System.out.println("\nNo record found");
 				else
 					return tempList;
 			}
-
-			return null;
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-	@Override
-	public boolean insert(User user) {
-		if(!userList.isEmpty()) {
-			for(User i:userList) {
-				if(i.getuName().equals(user.getuName())) {
-					System.out.println("\nNot Valid");
-					return false;
+		finally {
+			try {
+				if(conn != null) {
+					conn.close();
 				}
-				else {
-					System.out.println("Entry Successful in Dao");
-					ctr+=1;
-					user.setUserId(ctr);
-					userList.add(user);	
-					return true;
+				if(stmt != null) {
+					stmt.close();
 				}
+				/*
+				 * if(rs != null) { rs.close(); }
+				 */
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
-		else {
-			ctr+=1;
-			user.setUserId(ctr);
-			System.out.println("UserDao Entry Normal");
-			userList.add(user);	
-			return true;
+		return null;
+	}
+	@Override
+	public boolean insert(User user) {
+		ctr+=1;
+		int check;
+		Connection conn = util.getConn();
+		Statement stmt = null;
+		try {
+			Class.forName(util.getJDBC_Driver());
+			stmt = conn.createStatement();
+			PreparedStatement ps = util.getConn().prepareStatement("insert into Users values(?,?,?,?,?,?,?,?)");
+			if(stmt.executeUpdate("Select * from Users WHERE EMAIL = '"+ user.getuName()+"'")==0) {
+				ps.setInt(1, ctr);
+				ps.setString(2, user.getuName());
+				ps.setString(3, user.getuPass());
+				ps.setString(4, user.getAddress().getState());
+				ps.setString(5, user.getAddress().getCity());
+				ps.setInt(6, user.getAddress().getPinCode());
+				ps.setInt(7, 0);
+				ps.setInt(8, 1);
+				check = ps.executeUpdate();
+				if(check==1)
+					return true;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			ctr-=1;
+			return false;
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+				if(stmt != null) {
+					stmt.close();
+				}
+				/*
+				 * if(rs != null) { rs.close(); }
+				 */
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
+	//		if(!userList.isEmpty()) {
+	//			for(User i:userList) {
+	//				if(i.getuName().equals(user.getuName())) {
+	//					System.out.println("\nNot Valid");
+	//					return false;
+	//				}
+	//				else {
+	//					System.out.println("Entry Successful in Dao");
+	//					ctr+=1;
+	//					user.setUserId(ctr);
+	//					userList.add(user);	
+	//					return true;
+	//				}
+	//			}
+	//		}
+	//		else {
+	//			ctr+=1;
+	//			user.setUserId(ctr);
+	//			System.out.println("UserDao Entry Normal");
+	//			userList.add(user);	
+	//			return true;
+	//		}
+	//		return false;
 	@Override
 	public List<User> update(int id, String s, int option) {
 		tempList.clear();
-		for(User user :userList) {
-			if(user.getUserId()==id) {
+		Connection conn = util.getConn();
+		Statement stmt = null;
+		try {
+			Class.forName(util.getJDBC_Driver());
+			stmt = conn.createStatement();
+			if(stmt.executeUpdate("select count(1) where exists (select * from Users)") == 1)
+			{
+				PreparedStatement ps = util.getConn().prepareStatement("Update Users SET ? = ? WHERE USERID = "+id);
 				switch(option)
 				{
 				case 1:
-					user.setuName(s);
+					ps.setString(1, "EMAIL");
+					ps.setString(2, s);
 					break;
 				case 2:
-					user.setuPass(s);
+					ps.setString(1, "PASS");
+					ps.setString(2, s);
 					break;
 				case 3:
-					user.getAddress().setState(s);
+					ps.setString(1, "State");
+					ps.setString(2, s);
 					break;
 				case 4:
-					user.getAddress().setCity(s);
+					ps.setString(1, "CITY");
+					ps.setString(2, s);
 					break;
 				case 5:
-					user.getAddress().setPinCode(Integer.parseInt(s));
+					ps.setString(1, "PIN");
+					ps.setInt(2, Integer.parseInt(s));
 					break;
 				}
-				tempList.add(user);
-				return tempList;
+				ps.execute();
+			}
+			else
+				return null;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+				if(stmt != null) {
+					stmt.close();
+				}
+				/*
+				 * if(rs != null) { rs.close(); }
+				 */
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
+		//		for(User user :userList) {
+		//			if(user.getUserId()==id) {
+		//				switch(option)
+		//				{
+		//				case 1:
+		//					user.setuName(s);
+		//					break;
+		//				case 2:
+		//					user.setuPass(s);
+		//					break;
+		//				case 3:
+		//					user.getAddress().setState(s);
+		//					break;
+		//				case 4:
+		//					user.getAddress().setCity(s);
+		//					break;
+		//				case 5:
+		//					user.getAddress().setPinCode(Integer.parseInt(s));
+		//					break;
+		//				}
+		//				tempList.add(user);
+		//				return tempList;
+		//			}
+		//		}
 		return null;
 	}
 	@Override
 	public boolean delete(int id) {
-		for(User user: userList)
-			if(user.getUserId()==id) 
-			{
-				userList.remove(user);
+		Connection conn = util.getConn();
+		Statement stmt = null;
+		try {
+			Class.forName(util.getJDBC_Driver());
+			stmt = conn.createStatement();
+			String sql = "DELETE from USERS where USERID ="+id;
+			int i = stmt.executeUpdate(sql);
+			if(i == 1)
 				return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+				if(stmt != null) {
+					stmt.close();
+				}
+				/*
+				 * if(rs != null) { rs.close(); }
+				 */
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+		}
+//		for(User user: userList)
+//			if(user.getUserId()==id) 
+//			{
+//				userList.remove(user);
+//				return true;
+//			}
 		return false;
 	}
 	@Override
 	public List<User> display() {
-		if(userList.isEmpty())
-			System.out.print("No Rows found\n");
-		else {
-			return userList;
+		tempList.clear();
+		Connection conn = util.getConn();
+		Statement stmt = null;
+		try {
+			Class.forName(util.getJDBC_Driver());
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("Select * from Users");
+			while(rs.next()) {
+				User user = new User();
+				Address address = new Address();
+				user.setUserId(rs.getInt("USERID"));
+				user.setuName(rs.getString("EMAIL"));
+				user.setuPass(rs.getString("Pass"));
+				address.setState(rs.getString("State"));
+				address.setCity(rs.getString("City"));
+				address.setPinCode(rs.getInt("Pin"));
+				user.setAddress(address);
+				tempList.add(user);
+			}
+			if(tempList.isEmpty())
+				return null;
+			else
+				return tempList;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+				if(stmt != null) {
+					stmt.close();
+				}
+				/*
+				 * if(rs != null) { rs.close(); }
+				 */
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
+//		if(userList.isEmpty())
+//			System.out.print("No Rows found\n");
+//		else 
+//			return userList;
 	}
 }

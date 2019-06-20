@@ -1,3 +1,4 @@
+<%@page import="java.sql.ResultSet"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -38,6 +39,45 @@
 			});
 		}
 	}
+	function AdminCheck(x) {
+		$('#adminCheckBox').click(function() {
+			if ($(this).prop("checked") == true) {
+				$.ajax({
+					method : "POST",
+					url : "MakeAdmin",
+					data : {
+						"ID" : x,
+						"check" : 1
+					},
+					datatype : "html",
+					success : function() {
+						console.log("Value sent to Delete ");
+						window.location.reload();
+					},
+					error : function() {
+						alert("Error");
+					}
+				});
+			} else if ($(this).prop("checked") == false) {
+				$.ajax({
+					method : "POST",
+					url : "MakeAdmin",
+					data : {
+						"ID" : x,
+						"check" : 0
+					},
+					datatype : "html",
+					success : function() {
+						console.log("Value sent to Delete ");
+						window.location.reload();
+					},
+					error : function() {
+						alert("Error");
+					}
+				});
+			}
+		});
+	}
 	var value = 0;
 	$(document).ready(function() {
 		$("input").focus(function() {
@@ -57,11 +97,11 @@
 		console.log(bgColor);
 
 		document.body.style.background = bgColor; //body.style.
-		
-		if($('#myTable tr').length == 1)
-			$('#myTable').css("display","none");
+
+		if ($('#myTable tr').length == 1)
+			$('#myTable').css("display", "none");
 		else
-			$('#myTable').css("display","bloc");
+			$('#myTable').css("display", "bloc");
 	}
 
 	function openForm(x) {
@@ -95,7 +135,8 @@
 		var pin = $('#pinIn').val();
 		var state = $('#stateIn').val();
 		var city = $('#cityIn').val();
-		if (name == "" || /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(name)==false) {
+		if (name == ""
+				|| /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(name) == false) {
 			alert("Enter valid emial-ID");
 			return false;
 		}
@@ -113,9 +154,9 @@
 			alert("State/City don't have no numbers or special characters");
 			return false;
 		}
-	    //document.getElementById("myTable").style.display = "block";
-	    //document.getElementById("myTable").removeAttribute("display");
-	    
+		//document.getElementById("myTable").style.display = "block";
+		//document.getElementById("myTable").removeAttribute("display");
+
 		return true;
 	}
 	function validateFormUpdate() {
@@ -124,7 +165,8 @@
 		var pin = $('#updatePin').val();
 		var state = $('#updateCity').val();
 		var city = $('#updateState').val();
-		if (name == "" || /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(name)==false) {
+		if (name == ""
+				|| /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(name) == false) {
 			alert("Enter valid emial-ID");
 			return false;
 		}
@@ -142,7 +184,7 @@
 			alert("Enter Valid pin");
 			return false;
 		}
-	     document.getElementById("A").style.visibility = "visible";
+		document.getElementById("A").style.visibility = "visible";
 		return true;
 	}
 </script>
@@ -151,7 +193,6 @@ table {
 	border-collapse: collapse;
 	background-color: white;
 }
-
 
 thead {
 	background-color: tomato;
@@ -311,7 +352,7 @@ input {
 		<h1>User Data</h1>
 		<!-- <table style="width=20%" id="myTable"> -->
 
-		<table class="table table-striped" id="myTable" >
+		<table class="table table-striped" id="myTable">
 			<thead>
 				<th>ID</th>
 				<th>Name</th>
@@ -320,15 +361,20 @@ input {
 				<th>City</th>
 				<th>Pincode</th>
 				<th>Action</th>
+				<th>Make Admin</th>
 			</thead>
 			<%@page import="com.godrej.model.User"%>
 			<%@page import="com.godrej.service.UserService"%>
 			<%@page import="com.godrej.serviceimpl.UserServiceImpl"%>
 			<%@page import="java.util.ArrayList"%>
+			<%@page import="com.godrej.util.DbConnection"%>
+			<%@page import="java.sql.*"%>
 			<%
 				UserService userService = new UserServiceImpl();
+				DbConnection util = new DbConnection();
 				ArrayList<User> list = new ArrayList<User>(userService.getList());
-				for (User i : list) {
+
+				/* 		for (User i : list) {
 					out.print("<tr>");
 					out.print("<td>" + i.getUserId() + "</td>");
 					out.print("<td>" + i.getuName() + "</td>");
@@ -336,50 +382,86 @@ input {
 					out.print("<td>" + i.getAddress().getState() + "</td>");
 					out.print("<td>" + i.getAddress().getCity() + "</td>");
 					out.print("<td>" + i.getAddress().getPinCode() + "</td>");
-					out.print(
-							"<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
+					out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
 									+ i.getUserId() + ")'>Update</button>");
-					out.print(
-							"<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
-									+ i.getUserId() + ")'>Delete</button><br></td></tr>");
-					//usersList.add(userService);
+					out.print("<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
+									+ i.getUserId() + ")'>Delete</button><br></td>"); */
+				out.print("<tr>");
+				Statement stmt = null;
+				Connection conn = util.getConn();
+				try {
+					Class.forName(util.getJDBC_Driver());
+					stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery("select * from Users");
+					while (rs.next()) {
+						out.print("<td>" + rs.getInt("USERID") + "</td>");
+						out.print("<td>" + rs.getString("EMAIL") + "</td>");
+						out.print("<td>" + rs.getString("PASS") + "</td>");
+						out.print("<td>" + rs.getString("STATE") + "</td>");
+						out.print("<td>" + rs.getString("CITY") + "</td>");
+						out.print("<td>" + rs.getInt("PIN") + "</td>");
+						out.print(
+								"<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
+										+ rs.getInt("USERID") + ")'>Update</button>");
+						out.print("<button id='deleteButton'  type='button' class='button' onclick='uDelete("
+								+ rs.getInt("USERID") + ")'>Delete</button><br></td>");
+
+						if (rs.getInt("isAdmin") == 1) {
+							out.print(
+									"<td><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("
+											+ rs.getInt("USERID") + ")' checked></button></td>");
+						} else
+							out.print(
+									"<td><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("
+											+ rs.getInt("USERID") + " )'></button></td>");
+						out.print("</tr>");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (conn != null) {
+							conn.close();
+						}
+						if (stmt != null) {
+							stmt.close();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
+				//usersList.add(userService);
 			%>
-
 		</table>
-
-		<br> <br>
-
-		<div class="row">
-			<div align="center" class="col-md">
-				<form method="post" action="UserAdd" onsubmit="return validateForm();">
-					<div class="form-group">
-						<table>
-							<tr>
-								<td><label>Email: </label></td>
-								<td><input type="text" name="nameIn" id="nameIn"></td>
-							</tr>
-							<tr>
-								<td><label>Password: </label></td>
-								<td><input type="text" name="passIn" id="passIn"></td>
-							</tr>
-							<tr>
-								<td><label>State : </label></td>
-								<td><input type="text" name="stateIn" id="stateIn"></td>
-							</tr>
-							<tr>
-								<td><label>City: </label></td>
-								<td><input type="text" name="cityIn" id="cityIn"></td>
-							</tr>
-							<tr>
-								<td><label>PinCode: </label></td>
-								<td><input type="number" name="pinIn" id="pinIn"></td>
-							</tr>
-						</table>
-							<button type="submit" class="button">CREATE</button>
-					</div>
-				</form>
-			</div>
+		<div align="center" class="col-md">
+			<form method="post" action="UserAdd"
+				onsubmit="return validateForm();">
+				<div class="form-group">
+					<table>
+						<tr>
+							<td><label>Email: </label></td>
+							<td><input type="text" name="nameIn" id="nameIn"></td>
+						</tr>
+						<tr>
+							<td><label>Password: </label></td>
+							<td><input type="text" name="passIn" id="passIn"></td>
+						</tr>
+						<tr>
+							<td><label>State : </label></td>
+							<td><input type="text" name="stateIn" id="stateIn"></td>
+						</tr>
+						<tr>
+							<td><label>City: </label></td>
+							<td><input type="text" name="cityIn" id="cityIn"></td>
+						</tr>
+						<tr>
+							<td><label>PinCode: </label></td>
+							<td><input type="number" name="pinIn" id="pinIn"></td>
+						</tr>
+					</table>
+					<button type="submit" class="button">CREATE</button>
+				</div>
+			</form>
 		</div>
 		<div id="myModal" class="Modal">
 			<div class="form-popup" id="myForm">
