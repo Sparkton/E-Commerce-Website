@@ -127,14 +127,22 @@ public class UserDaoImpl implements UserDao{
 	}
 	@Override
 	public boolean insert(User user) {
-		ctr+=1;
 		int check;
 		Connection conn = util.getConn();
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
 			stmt = conn.createStatement();
-			PreparedStatement ps = util.getConn().prepareStatement("insert into Users values(?,?,?,?,?,?,?,?)");
+			Class.forName(util.getJDBC_Driver());
+			while(true) {
+				ctr+=1;
+				String sql = "select USERID from Users where userid = "+ctr;
+				int flag = stmt.executeUpdate(sql);
+				if(flag==0)
+					break;
+			}
+			stmt = null;
+			stmt = conn.createStatement();
+			PreparedStatement ps = conn.prepareStatement("insert into Users values(?,?,?,?,?,?,?,?)");
 			if(stmt.executeUpdate("Select * from Users WHERE EMAIL = '"+ user.getuName()+"'")==0) {
 				ps.setInt(1, ctr);
 				ps.setString(2, user.getuName());
@@ -143,10 +151,13 @@ public class UserDaoImpl implements UserDao{
 				ps.setString(5, user.getAddress().getCity());
 				ps.setInt(6, user.getAddress().getPinCode());
 				ps.setInt(7, 0);
-				ps.setInt(8, 1);
+				ps.setNull(8, java.sql.Types.INTEGER);
 				check = ps.executeUpdate();
-				if(check==1)
+				if(check==1) {
+					String sql = "insert into Login values("+user.getuName()+","+user.getuPass()+")";
+					stmt.executeQuery(sql);
 					return true;
+				}
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -200,9 +211,9 @@ public class UserDaoImpl implements UserDao{
 		try {
 			Class.forName(util.getJDBC_Driver());
 			stmt = conn.createStatement();
-			if(stmt.executeUpdate("select count(1) where exists (select * from Users)") == 1)
+			if(stmt.executeUpdate("select * from Users") >0)
 			{
-				PreparedStatement ps = util.getConn().prepareStatement("Update Users SET ? = ? WHERE USERID = "+id);
+				PreparedStatement ps = conn.prepareStatement("UPDATE users SET ? = ? WHERE USERID = "+id);
 				switch(option)
 				{
 				case 1:
@@ -226,7 +237,7 @@ public class UserDaoImpl implements UserDao{
 					ps.setInt(2, Integer.parseInt(s));
 					break;
 				}
-				ps.execute();
+				ps.executeQuery();
 			}
 			else
 				return null;
@@ -235,10 +246,10 @@ public class UserDaoImpl implements UserDao{
 			e.printStackTrace();
 		}finally {
 			try {
-				if(conn != null) {
+				if(conn != null && option == 5) {
 					conn.close();
 				}
-				if(stmt != null) {
+				if(stmt != null && option == 5) {
 					stmt.close();
 				}
 				/*
@@ -248,6 +259,7 @@ public class UserDaoImpl implements UserDao{
 				e.printStackTrace();
 			}
 		}
+		return null;
 		//		for(User user :userList) {
 		//			if(user.getUserId()==id) {
 		//				switch(option)
@@ -272,7 +284,6 @@ public class UserDaoImpl implements UserDao{
 		//				return tempList;
 		//			}
 		//		}
-		return null;
 	}
 	@Override
 	public boolean delete(int id) {

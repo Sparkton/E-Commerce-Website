@@ -17,7 +17,7 @@ public class UserDisplay extends HttpServlet {
     }
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	response.sendRedirect("StartUpRegister");
+    	response.sendRedirect("StartUpLogin");
     }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Reached post");

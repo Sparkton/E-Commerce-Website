@@ -252,10 +252,11 @@ input {
 <body>
 	<div class="navbar">
 		<div style:align="left">
-			<a href="StartUpPageProduct">Product</a>
+			<a href="StartUpPageProduct">Products</a>
 		</div>
 		<div style:align="right">
-			<a href="StartUpLogin">Login</a> <a href="StartUpRegister">Register</a>
+			<a href="UserDisplay">LogOut</a> 
+			<a href="StartUpRegister"> New Register</a>
 		</div>
 	</div>
 	<br>

@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,9 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.godrej.dao.UserDao;
-import com.godrej.daoimpl.UserDaoImpl;
-import com.godrej.model.User;
 import com.godrej.util.DbConnection;
 
 
@@ -37,23 +32,27 @@ public class NewLogin extends HttpServlet {
 		Connection conn = util.getConn();
 		Statement stmt = null;
 		try {
+			Class.forName(util.getJDBC_Driver());
 			stmt = conn.createStatement();
-			String sql = "select * from Login where EMAILID = "+uName+" AND PASS = "+uPass;
+			String sql = "select (EXISTS (SELECT * from Login where EMAILID = '"+uName+"' AND PASS = '"+uPass+"'))::int";
 			int i = stmt.executeUpdate(sql);
 			if(i==1){
-				ResultSet rs = stmt.executeQuery("select * from Users where EMAILID = "+uName+" AND PASS = "+uPass);
+				ResultSet rs = stmt.executeQuery("select * from Users where EMAILID = '"+uName+"' AND PASS = '"+uPass+"'");
 				request.setAttribute("ID", rs.getInt("USERID")); 
 				request.setAttribute("uName",rs.getString("EMAIL")); 
 				request.setAttribute("uPass", rs.getString("Pass"));
 				request.setAttribute("State",rs.getString("State"));
 				request.setAttribute("City", rs.getString("City"));
 				request.setAttribute("Pincode", rs.getInt("Pin"));
-				if(rs.getInt("isAdmin")==1) {
+				ResultSet temp = stmt.executeQuery("select isAdmin from USERS where EmailID = "+uName+" AND PASS = "+uPass);
+				if(temp.getInt("isAdmin")==1) {
+					System.out.println("BOIs an admin");
 					RequestDispatcher rd = request.getRequestDispatcher("StartUpPage");//Send to Admin Page
 					rd.forward(request, response);
 				}
 				else {
-					RequestDispatcher rd = request.getRequestDispatcher("");//Semd to normal page, figure it out
+					System.out.println("BOIs a pleb");
+					RequestDispatcher rd = request.getRequestDispatcher("jsp/Profile.jsp");//Send to normal page, figure it out 
 					rd.forward(request, response);
 				}
 			}

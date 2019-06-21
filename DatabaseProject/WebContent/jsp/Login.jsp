@@ -88,11 +88,11 @@ label {
 		console.log(bgColor);
 		document.body.style.background = bgColor;
 	}
-	function isEmpty(){
+	function isEmpty() {
 		var userName = $("#uName").val();
 		var pass = $("#pass").val();
 		val = 0;
-		if(userName == "" || pass == "")
+		if (userName == "" || pass == "")
 			return false;
 		else
 			return true;
@@ -101,9 +101,9 @@ label {
 </head>
 <body>
 	<div class="navbar">
-		<div style:align="left">
+		<!-- <div style:align="left">
 			<a href="StartUpPageProduct">Product</a> <a href="StartUpPage">User</a>
-		</div>
+		</div> -->
 		<div style:align="right">
 			<a href="StartUpLogin">Login</a> <a href="StartUpRegister">Register</a>
 		</div>
@@ -118,10 +118,9 @@ label {
 	<div>
 		<form method="post" onsubmit="return isEmpty()" action="newLogin"
 			method="post" style="display: grid;">
-			<label>Email-Id : </label> 
-			<input type="text" name="uName" id="uName">
-			<label><br>Password : </label> 
-			<input type="text" name="pass" id="pass"> <br>
+			<label>Email-Id : </label> <input type="text" name="uName" id="uName">
+			<label><br>Password : </label> <input type="text" name="pass"
+				id="pass"> <br>
 			<button type="submit" class="button">SUBMIT</button>
 			<br>
 			<h6 style="text-align-last: center;">

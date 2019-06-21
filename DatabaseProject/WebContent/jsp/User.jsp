@@ -39,44 +39,46 @@
 			});
 		}
 	}
-	function AdminCheck(x) {
-		$('#adminCheckBox').click(function() {
-			if ($(this).prop("checked") == true) {
-				$.ajax({
-					method : "POST",
-					url : "MakeAdmin",
-					data : {
-						"ID" : x,
-						"check" : 1
-					},
-					datatype : "html",
-					success : function() {
-						console.log("Value sent to Delete ");
-						window.location.reload();
-					},
-					error : function() {
-						alert("Error");
-					}
-				});
-			} else if ($(this).prop("checked") == false) {
-				$.ajax({
-					method : "POST",
-					url : "MakeAdmin",
-					data : {
-						"ID" : x,
-						"check" : 0
-					},
-					datatype : "html",
-					success : function() {
-						console.log("Value sent to Delete ");
-						window.location.reload();
-					},
-					error : function() {
-						alert("Error");
-					}
-				});
-			}
-		});
+	function AdminCheck(x, y) {
+		console.log("Admin check called");
+		console.log("Step in function");
+		if (y == 1) {
+			console.log(y);
+			$.ajax({
+				method : "POST",
+				url : "MakeAdmin",
+				data : {
+					"ID" : x,
+					"check" : y
+				},
+				datatype : "html",
+				success : function() {
+					console.log("User updated to Admin ");
+					window.location.reload();
+				},
+				error : function() {
+					alert("Error");
+				}
+			});
+		} else {
+			console.log(y);
+			$.ajax({
+				method : "POST",
+				url : "MakeAdmin",
+				data : {
+					"ID" : x,
+					"check" : y
+				},
+				datatype : "html",
+				success : function() {
+					console.log("User updated to Not-Admin ");
+					window.location.reload();
+				},
+				error : function() {
+					alert("Error");
+				}
+			});
+		}
 	}
 	var value = 0;
 	$(document).ready(function() {
@@ -333,6 +335,65 @@ input {
 	filter: blur(2px);
 	-webkit-filter: blur(2px);
 }
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked+.slider {
+	background-color: #2196F3;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
 </style>
 </head>
 
@@ -407,13 +468,13 @@ input {
 								+ rs.getInt("USERID") + ")'>Delete</button><br></td>");
 
 						if (rs.getInt("isAdmin") == 1) {
-							out.print(
-									"<td><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("
-											+ rs.getInt("USERID") + ")' checked></button></td>");
+							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("
+											+ rs.getInt("USERID")
+											+ ",0)' checked></input><span class='slider round'></span></label></td>");
 						} else
-							out.print(
-									"<td><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("
-											+ rs.getInt("USERID") + " )'></button></td>");
+							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("
+											+ rs.getInt("USERID")
+											+ ",1)'></input><span class='slider round'></span></label></td>");
 						out.print("</tr>");
 					}
 				} catch (Exception e) {
@@ -470,12 +531,16 @@ input {
 						onsubmit="return validateFormUpdate()">
 						<h1>Update</h1>
 
-						<label><b>ID</b></label> <input type="text" name="updateID"
-							id="updateId" readonly> <label><b>Name</b></label> <input
-							type="text" name="updateName" id="updateName"> <label><b>Password</b></label>
-						<input type="text" name="updatePass" id="updatePass"> <label><b>State</b></label>
-						<input type="text" name="updateState" id="updateState"> <label><b>City</b></label>
-						<input type="text" name="updateCity" id="updateCity"> <label><b>Pin</b></label>
+						<label><b>ID</b></label> <input type="text" name="updateID" id="updateId" readonly>
+						<label><b>Name</b></label> 
+						<input type="text" name="updateName" id="updateName"> 
+						<label><b>Password</b></label>
+						<input type="text" name="updatePass" id="updatePass">
+						<label><b>State</b></label>
+						<input type="text" name="updateState" id="updateState"> 
+						<label><b>City</b></label>
+						<input type="text" name="updateCity" id="updateCity"> 
+						<label><b>Pin</b></label>
 						<input type="text" name="updatePin" id="updatePin"><br>
 
 						<button type="submit" class="btn" onclick="closeForm()">Update</button>

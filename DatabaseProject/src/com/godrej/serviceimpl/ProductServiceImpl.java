@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public void update(int id, String s, int option) {
-		tempList = productDao.update(id,s,option);
-		intDisplay();
+		productDao.update(id,s,option);
+//		intDisplay();
 	}
 	@Override
 	public void delete(int id) {
@@ -49,8 +49,8 @@ public class ProductServiceImpl implements ProductService {
 //			for(Product i:pdtList)
 //				displaySingle(i);
 //		}
-		tempList = productDao.display();
-		intDisplay();
+//		tempList = productDao.display();
+//		intDisplay();
 	}
 	public void intDisplay() {
 		if(tempList.isEmpty())

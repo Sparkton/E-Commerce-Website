@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService
 
 	@Override
 	public void update(int id, String s, int option) {
-		tempList = userDao.update(id,s,option);
-		intDisplay();
+		/* tempList = */userDao.update(id,s,option);
+		//intDisplay();
 	}
 
 	@Override
@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService
 
 	@Override
 	public void display() {
-		tempList = new ArrayList<User>(userDao.display());
+		//tempList = new ArrayList<User>(userDao.display());
 		System.out.println("Reached SeviceImpl");
-		intDisplay();
+		//intDisplay();
 	}
 	private void intDisplay() {
 		if(tempList.isEmpty())

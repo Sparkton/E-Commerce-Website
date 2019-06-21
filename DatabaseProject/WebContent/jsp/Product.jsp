@@ -120,11 +120,7 @@
 </script>
 <style>
 table {
-	border: 1px solid black;
 	border-collapse: collapse;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
 	background-color: white;
 }
 
@@ -216,12 +212,14 @@ input {
 }
 
 .form-popup {
+	top: 0;
 	display: none;
 	position: fixed;
-	bottom: 0;
-	right: 15px;
+	right: 40%;
 	border: 3px solid #f1f1f1;
 	z-index: 9;
+	width: 200px;
+	margin: 0 auto;
 }
 
 .form-container {
@@ -244,6 +242,7 @@ input {
 .form-container .cancel {
 	background-color: red;
 }
+
 .Modal {
 	display: none;
 	position: fixed;
@@ -259,6 +258,7 @@ input {
 	overflow: auto;
 	transition: all 0.3s linear;
 }
+
 .is-blurred {
 	filter: blur(2px);
 	-webkit-filter: blur(2px);
@@ -287,15 +287,18 @@ input {
 				<th>Category</th>
 				<th>Price</th>
 				<th>Actions</th>
+				<th>Buy</th>
 			</thead>
 			<%@page import="com.godrej.model.Product"%>
 			<%@page import="com.godrej.service.ProductService"%>
 			<%@page import="com.godrej.serviceimpl.ProductServiceImpl"%>
 			<%@page import="java.util.ArrayList"%>
+			<%@page import="com.godrej.util.DbConnection"%>
+			<%@page import="java.sql.*"%>
 			<%
-				ProductService pdtService = new ProductServiceImpl();
-				ArrayList<Product> list = new ArrayList<Product>(pdtService.getList());
-				for (Product i : list) {
+				
+			/*ArrayList<Product> list = new ArrayList<Product>(pdtService.getList());
+				 for (Product i : list) {
 					out.print("<tr>");
 					out.print("<td>" + i.getProduct_Id() + "</td>");
 					out.print("<td>" + i.getProduct_Name() + "</td>");
@@ -303,8 +306,46 @@ input {
 					out.print("<td>" + i.getProduct_Price() + "</td>");
 					out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
 							+ i.getProduct_Id() + ")'>Update</button>");
-					out.print("<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='pDelete(" + i.getProduct_Id()
+					out.print("<td><button id='addButton' style='margin-right:16px' type='submit' class='button' onclick='addPdt("
+							+ i.getProduct_Id() + ")'>Update</button>");
+					out.print("<button id='deleteButton'  type='button' class='button' onclick='pDelete(" + i.getProduct_Id()
 							+ ")'>Delete</button><br></td></tr>");
+				} */
+				 DbConnection util = new DbConnection();
+				out.print("<tr>");
+				Statement stmt = null;
+				Connection conn = util.getConn();
+				try{
+					Class.forName(util.getJDBC_Driver());
+					stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery("select * from Product");
+					while (rs.next()) {
+						out.print("<td>" + rs.getInt("PID") + "</td>");
+						out.print("<td>" + rs.getString("NAME") + "</td>");
+						out.print("<td>" + rs.getString("CATEGORY") + "</td>");
+						out.print("<td>" + rs.getInt("PRICE") + "</td>");
+						out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
+										+ rs.getInt("PID") + ")'>Update</button>");
+						out.print("<button id='deleteButton'  type='button' class='button' onclick='uDelete("
+								+ rs.getInt("PID") + ")'>Delete</button><br></td>");
+
+							out.print("<td><button id='buyButton'  type='button' class='button' onclick='buyPdt("
+									+ rs.getInt("PID") + ")'>Purchase</button></td>");
+						out.print("</tr>");
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (conn != null) {
+							conn.close();
+						}
+						if (stmt != null) {
+							stmt.close();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			%>
 
