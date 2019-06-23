@@ -127,18 +127,21 @@ public class UserDaoImpl implements UserDao{
 	}
 	@Override
 	public boolean insert(User user) {
+		ctr+=1;
 		int check;
 		Connection conn = util.getConn();
 		Statement stmt = null;
 		try {
+			Class.forName(util.getJDBC_Driver());
 			stmt = conn.createStatement();
 			Class.forName(util.getJDBC_Driver());
 			while(true) {
-				ctr+=1;
 				String sql = "select USERID from Users where userid = "+ctr;
 				int flag = stmt.executeUpdate(sql);
 				if(flag==0)
 					break;
+				else
+					ctr++;
 			}
 			stmt = null;
 			stmt = conn.createStatement();
@@ -154,7 +157,7 @@ public class UserDaoImpl implements UserDao{
 				ps.setNull(8, java.sql.Types.INTEGER);
 				check = ps.executeUpdate();
 				if(check==1) {
-					String sql = "insert into Login values("+user.getuName()+","+user.getuPass()+")";
+					String sql = "insert into Login values('"+user.getuName()+"','"+user.getuPass()+"')";
 					stmt.executeQuery(sql);
 					return true;
 				}

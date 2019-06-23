@@ -9,19 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class DisplaySingle
- */
-@WebServlet("/DisplaySingle")
-public class DisplaySingle extends HttpServlet {
-	private static final long serialVersionUID = 1L;	
+
+@WebServlet("/StartUpAllProducts")
+public class StartUpAllProducts extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher userPage = request.getRequestDispatcher("jsp/DisplayUserDetails.jsp");
-		userPage.forward(request, response);
+		doPost(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher userPage = request.getRequestDispatcher("jsp/DisplayUserDetails.jsp");
-		userPage.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("jsp/AllProducts");
+		rd.forward(request, response);
 	}
 
 }

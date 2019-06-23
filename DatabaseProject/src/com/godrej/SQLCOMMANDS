@@ -2,3 +2,8 @@ create table Product(pId number, name varchar(10), category varchar(10), price n
 create table Login(emailId varchar(10) primary key, pass varchar(10));
 CREATE TABLE Users(userId number primary key, email varchar(10), pass varchar(10), state varchar(10), city varchar(10), pin number, isAdmin number, pId number, FOREIGN KEY(pId) REFERENCES Product(pId));
 insert into Login values('abc@xyz.in','qwerty');
+insert into Product values(1,'Eclairs','Chocolate',5);
+insert into Product values(2,'Boomerang','Chocolate',5);
+insert into Product values(3,'Bisleri','Water',10);
+insert into Product values(4,'OnePlus3','Phone',3000);
+insert into Product values(5,'FeviCol','Glue',15);

@@ -131,10 +131,10 @@ label {
 </head>
 <body>
 	<div class="navbar">
-		<div style:align="left">
+		<div style="align:left">
 			<a href="StartUpPage">User</a> <a href="StartUpPageProduct">Product</a>
 		</div>
-		<div style:align="right">
+		<div style="align:right">
 			<a href="StartUpLogin">Login</a> <a href="StartUpRegister">Register</a>
 		</div>
 	</div>
@@ -146,7 +146,7 @@ label {
 	<br>
 	<div class="container-fluid">
 		<div class="row">
-			<form action="UserAdd" id="UserForm" method="post"
+			<form action="UserAdd" id="UserForm" method="get"
 				onsubmit="return validateForm()">
 				<h4 style="text-align: -webkit-center;">User Form</h4>
 				<div class="form-group">
