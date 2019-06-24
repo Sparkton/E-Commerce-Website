@@ -23,7 +23,7 @@
 				method : "POST",
 				url : "PdtDel",
 				data : {
-					"ID" : id
+					"productCartDel" : id
 				},
 				datatype : "html",
 				success : function() {
@@ -55,11 +55,11 @@
 		console.log(bgColor);
 
 		document.body.style.background = bgColor; //body.style.
-		
-		if($('#myTable tr').length == 1)
-			$('#myTable').css("display","none");
+
+		if ($('#myTable tr').length == 1)
+			$('#myTable').css("display", "none");
 		else
-			$('#myTable').css("display","bloc");
+			$('#myTable').css("display", "bloc");
 	}
 </script>
 <style>
@@ -211,12 +211,12 @@ input {
 </head>
 <body>
 	<div class="navbar">
-		<div style:align="left">
+		<div style="align:left">
 			<a href="StartUpPageProduct">Products</a>
 		</div>
-		<div style:align="right">
-			<a href="UserDisplay">LogOut</a> 
-			<a href="DisplayProfile"> Profile</a>
+		<div style="align:right">
+			<a href="UserDisplay">LogOut</a> <a href="DisplayProfile">
+				Profile</a>
 		</div>
 	</div>
 	<br>
@@ -240,38 +240,47 @@ input {
 			<%@page import="com.godrej.serviceimpl.UserServiceImpl"%>
 			<%@page import="com.godrej.util.DbConnection"%>
 			<%@page import="java.util.ArrayList"%>
-			<%@page import="java.sql.Statement" %>
-			<%@page import="java.sql.Connection" %>
-			<%@page import="java.sql.PreparedStatement" %>
-			<%@page import="java.sql.ResultSet" %>
+			<%@page import="java.sql.Statement"%>
+			<%@page import="java.sql.Connection"%>
+			<%@page import="java.sql.PreparedStatement"%>
+			<%@page import="java.sql.ResultSet"%>
 			<%
 				DbConnection util = new DbConnection();
 				Connection conn = util.getConn();
-				try{
-				out.print("<tr>");
-				out.print("<td>" + request.getAttribute("ID") + "</td>");
-				out.print("<td>" + request.getAttribute("uName") + "</td>");
-				out.print("<td>" + request.getAttribute("uPass") + "</td>");
-				out.print("<td>" + request.getAttribute("State") + "</td>");
-				out.print("<td>" + request.getAttribute("City") + "</td>");
-				out.print("<td>" + request.getAttribute("Pincode") + "</td>");
-				out.print("<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
-								+ request.getAttribute("ID")+ ")'>Delete</button><br></td></tr>");
-				out.print("</tr>");
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-				finally{
-					try{
-					if(conn != null) {
-						conn.close();
+				Statement stmt = null;
+				ResultSet rs = (ResultSet) request.getAttribute("productsList");
+				int ctr = 0;
+				try {
+					Class.forName(util.getJDBC_Driver());
+					while (rs.next()) {
+						String sql = "select * FROM PRODUCTS WHERE PID = '"+rs.getInt(1)+"'";//check if 1 or 2, make same change belw as well
+						stmt = conn.createStatement();
+						ResultSet rs1 = stmt.executeQuery(sql);
+						out.print("<tr>");
+						out.print("<td>" + rs1.getInt(1) + "</td>");
+						out.print("<td>" + rs1.getString(2) + "</td>");
+						out.print("<td>" + rs1.getString(3) + "</td>");
+						out.print("<td>" + rs1.getInt(4) + "</td>");
+						ctr+=rs.getInt(4);
+						out.print(
+								"<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
+										+ rs1.getInt(1) + ")'>Delete</button><br></td></tr>");
+						out.print("</tr>");
 					}
-/* 					if(stmt != null) {
-						stmt.close();
-					} */
+					out.println("<tr><td></td><td></td><td>Total:</td><td>"+ctr+"</td></tr>");
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				} finally {
+					try {
+						if (conn != null) {
+							conn.close();
+						}
+						/* 					if(stmt != null) {
+												stmt.close();
+											} */
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			%>
 

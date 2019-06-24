@@ -7,3 +7,4 @@ insert into Product values(2,'Boomerang','Chocolate',5);
 insert into Product values(3,'Bisleri','Water',10);
 insert into Product values(4,'OnePlus3','Phone',3000);
 insert into Product values(5,'FeviCol','Glue',15);
+ALso created new table ProductBought(USERID, PID)

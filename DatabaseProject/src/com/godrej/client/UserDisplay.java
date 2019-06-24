@@ -20,7 +20,6 @@ public class UserDisplay extends HttpServlet {
     	response.sendRedirect("StartUpLogin");
     }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Reached post");
 		response.sendRedirect("StartUpPage");
 	}
 

@@ -252,11 +252,10 @@ input {
 <body>
 	<div class="navbar">
 		<div style:align="left">
-			<a href="StartUpPageProduct">Products</a>
+			<a href="StartUpAllProducts">Products</a>
 		</div>
 		<div style:align="right">
 			<a href="UserDisplay">LogOut</a> 
-			<a href="StartUpRegister"> New Register</a>
 		</div>
 	</div>
 	<br>
@@ -292,9 +291,9 @@ input {
 				out.print(
 						"<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
 								+ request.getAttribute("ID") + ")'>Update</button>");
-				out.print(
+				/* out.print(
 						"<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
-								+ request.getAttribute("ID")+ ")'>Delete</button><br></td></tr>");
+								+ request.getAttribute("ID")+ ")'>Delete</button><br></td></tr>"); */
 				out.print("</tr>");
 			%>
 

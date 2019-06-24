@@ -21,6 +21,7 @@ import com.godrej.util.DbConnection;
 @WebServlet("/newLogin")
 public class NewLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	DbConnection util = new DbConnection();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Try POST");
 	}
@@ -28,13 +29,12 @@ public class NewLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uName = request.getParameter("uName");
 		String uPass = request.getParameter("pass");
-		DbConnection util = new DbConnection();
 		Connection conn = util.getConn();
 		Statement stmt = null;
 		try {
 			Class.forName(util.getJDBC_Driver());
 			stmt = conn.createStatement();
-			String sql = "select (EXISTS (SELECT * from Login where EMAILID = '"+uName+"' AND PASS = '"+uPass+"'))::int";
+			String sql = "select  * from Login where EMAILID = '"+uName+"' AND PASS = '"+uPass+"'";
 			int i = stmt.executeUpdate(sql);
 			if(i==1){
 				ResultSet rs = stmt.executeQuery("select * from Users where EMAILID = '"+uName+"' AND PASS = '"+uPass+"'");

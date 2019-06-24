@@ -15,15 +15,15 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script>
-	function pDelete(x) {
+	function pAdd(x) {
 		var id = x;
 		var check = confirm("Are you sure?");
 		if (check == true) {
 			$.ajax({
-				method : "POST",
-				url : "PdtDel",
+				method : "GET",
+				url : "PdtBuy",
 				data : {
-					"ID" : id
+					"PID" : id
 				},
 				datatype : "html",
 				success : function() {
@@ -212,12 +212,14 @@ input {
 <body>
 	<div class="navbar">
 		<div style:align="left">
-			<a href="StartUpPageProduct">Products</a>
-		</div>
-		<div style:align="right">
-			<a href="UserDisplay">LogOut</a> 
 			<a href="DisplayProfile"> Profile</a>
 		</div>
+		<div style:align="right">
+			<a href="UserDisplay">LogOut</a>
+		</div>
+	</div>
+	<div>
+		<a href="StartUpCart">Cart</a>
 	</div>
 	<br>
 	<br>
@@ -240,23 +242,21 @@ input {
 			<%@page import="com.godrej.serviceimpl.UserServiceImpl"%>
 			<%@page import="com.godrej.util.DbConnection"%>
 			<%@page import="java.util.ArrayList"%>
-			<%@page import="java.sql.Statement" %>
-			<%@page import="java.sql.Connection" %>
-			<%@page import="java.sql.PreparedStatement" %>
-			<%@page import="java.sql.ResultSet" %>
+			<%@page import="java.sql.Statement"%>
+			<%@page import="java.sql.Connection"%>
+			<%@page import="java.sql.PreparedStatement"%>
+			<%@page import="java.sql.ResultSet"%>
 			<%
 				DbConnection util = new DbConnection();
 				Connection conn = util.getConn();
 				try{
 				out.print("<tr>");
-				out.print("<td>" + request.getAttribute("ID") + "</td>");
-				out.print("<td>" + request.getAttribute("uName") + "</td>");
-				out.print("<td>" + request.getAttribute("uPass") + "</td>");
-				out.print("<td>" + request.getAttribute("State") + "</td>");
-				out.print("<td>" + request.getAttribute("City") + "</td>");
-				out.print("<td>" + request.getAttribute("Pincode") + "</td>");
-				out.print("<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
-								+ request.getAttribute("ID")+ ")'>Delete</button><br></td></tr>");
+				out.print("<td>" + request.getAttribute("PID") + "</td>");
+				out.print("<td>" + request.getAttribute("Name") + "</td>");
+				out.print("<td>" + request.getAttribute("Category") + "</td>");
+				out.print("<td>" + request.getAttribute("Price") + "</td>");
+				out.print("<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='pAdd("
+								+ request.getAttribute("PID")+ ")'>Delete</button><br></td></tr>");
 				out.print("</tr>");
 				}catch(Exception e){
 					e.printStackTrace();
