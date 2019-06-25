@@ -1,10 +1,25 @@
-create table Product(pId number, name varchar(10), category varchar(10), price number, primary key(pId));
-create table Login(emailId varchar(10) primary key, pass varchar(10));
-CREATE TABLE Users(userId number primary key, email varchar(10), pass varchar(10), state varchar(10), city varchar(10), pin number, isAdmin number, pId number, FOREIGN KEY(pId) REFERENCES Product(pId));
+create table Product(pId number, name varchar(255), category varchar(255), price number, primary key(pId));
+create table Login(emailId varchar(255) primary key, pass varchar(255));
+CREATE TABLE Users(userId number primary key, email varchar(255), pass varchar(255), state varchar(255), city varchar(255), pin number, isAdmin number, pId number, FOREIGN KEY(pId) REFERENCES Product(pId));
 insert into Login values('abc@xyz.in','qwerty');
 insert into Product values(1,'Eclairs','Chocolate',5);
 insert into Product values(2,'Boomerang','Chocolate',5);
 insert into Product values(3,'Bisleri','Water',10);
 insert into Product values(4,'OnePlus3','Phone',3000);
 insert into Product values(5,'FeviCol','Glue',15);
-ALso created new table ProductBought(USERID, PID)
+CREATE TABLE ProductBought(USERID int, PID int, Foreign Key(USERID) references Users(USERID),Foreign Key(PID) references Product(PID));
+insert into USERS values(4,'asd@fgh.in','asdfgh','Karnataka','Bangalore',400050,1);
+insert into Login values(asd@fgh.in','asdfgh');
+
+//Trigger not working, figure it out
+create or replace trigger LoginInsert
+AFTER INSERT or UPDATE ON Users 
+Begin
+insert into Login values (x,y) where select EMAIL FROM USERID WHERE MAX(USERID) as x AND select PASS FROM USERID WHERE MAX(USERID) as y;
+END;
+//
+
+select * FROM USERS ORDER BY USERID ASC;
+select * FROM Product ORDER BY PID ASC;
+
+

@@ -14,10 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 public class StartUpAllProducts extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("jsp/AllProduct.jsp");
+		rd.forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("jsp/AllProducts");
+		RequestDispatcher rd = request.getRequestDispatcher("jsp/AllProduct.jsp");
 		rd.forward(request, response);
 	}
 

@@ -16,19 +16,19 @@ import com.godrej.util.DbConnection;
 @WebServlet("/PdtBuy")
 public class PdtBuy extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String id;		
+	int id;		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		id = request.getParameter("PID");
-		DbConnection util = new DbConnection();
-		Connection conn = util.getConn();
+		id = Integer.parseInt(request.getParameter("PID"));
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			PreparedStatement ps = conn.prepareStatement("insert into PRODUCTBOUGHT values(?,?)");
-			ps.setString(1, request.getParameter("ID"));
-			ps.setString(2, id);
-			ps.execute();
+			ps.setInt(1, (Integer)request.getAttribute("ID"));
+			ps.setInt(2, id);
+			ps.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

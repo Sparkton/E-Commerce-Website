@@ -132,10 +132,10 @@ label {
 <body>
 	<div class="navbar">
 		<div style="align:left">
-			<a href="StartUpPage">User</a> <a href="StartUpPageProduct">Product</a>
+			<a href="StartUpLogin">Login</a>
 		</div>
 		<div style="align:right">
-			<a href="StartUpLogin">Login</a> <a href="StartUpRegister">Register</a>
+			<a href="StartUpRegister">Register</a>
 		</div>
 	</div>
 	<br>
@@ -189,7 +189,7 @@ label {
 
 					<div class="carousel-inner">
 						<div class="carousel-item active">
-							<img class="img" src="jsp/images/cara0.jpg" alt="Pic1">
+							<img class="img" src="/images/cara0.jpg" alt="Pic1">
 						</div>
 						<div class="carousel-item ">
 							<img class="img" src="images/cara1.jpg" alt="Pic2">

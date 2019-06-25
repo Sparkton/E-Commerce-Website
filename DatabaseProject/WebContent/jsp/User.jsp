@@ -39,9 +39,24 @@
 			});
 		}
 	}
+	/* function UserUpdateLocal() {
+		var id = $('#updateId').val();
+			$.ajax({
+				method : "POST",
+				url : "UserUpdate",
+				data : {
+					"ID" : id
+				},
+				datatype : "html",
+				success : function() {
+					window.location.reload();
+				},
+				error : function() {
+					alert("Error");
+				}
+			});
+	} */
 	function AdminCheck(x, y) {
-		console.log("Admin check called");
-		console.log("Step in function");
 		if (y == 1) {
 			console.log(y);
 			$.ajax({
@@ -403,7 +418,7 @@ input:checked+.slider:before {
 			<a href="StartUpPageProduct">Product</a>
 		</div>
 		<div style:align="right">
-			<a href="StartUpLogin">Login</a> <a href="StartUpRegister">Register</a>
+			<a href="UserDisplay">LogOut</a> 
 		</div>
 	</div>
 	<br>
@@ -432,7 +447,6 @@ input:checked+.slider:before {
 			<%@page import="java.sql.*"%>
 			<%
 				UserService userService = new UserServiceImpl();
-				DbConnection util = new DbConnection();
 				ArrayList<User> list = new ArrayList<User>(userService.getList());
 
 				/* 		for (User i : list) {
@@ -448,12 +462,13 @@ input:checked+.slider:before {
 					out.print("<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
 									+ i.getUserId() + ")'>Delete</button><br></td>"); */
 				out.print("<tr>");
+				Connection conn = null;
 				Statement stmt = null;
-				Connection conn = util.getConn();
 				try {
-					Class.forName(util.getJDBC_Driver());
+					DbConnection util = new DbConnection();
+					conn = util.getConn();
 					stmt = conn.createStatement();
-					ResultSet rs = stmt.executeQuery("select * from Users");
+					ResultSet rs = stmt.executeQuery("select * from Users ORDER BY USERID ASC");
 					while (rs.next()) {
 						out.print("<td>" + rs.getInt("USERID") + "</td>");
 						out.print("<td>" + rs.getString("EMAIL") + "</td>");
@@ -495,8 +510,7 @@ input:checked+.slider:before {
 			%>
 		</table>
 		<div align="center" class="col-md">
-			<form method="post" action="UserAdd"
-				onsubmit="return validateForm();">
+			<form method="post" action="UserAdd" onsubmit="return validateForm();">
 				<div class="form-group">
 					<table>
 						<tr>
@@ -531,7 +545,8 @@ input:checked+.slider:before {
 						onsubmit="return validateFormUpdate()">
 						<h1>Update</h1>
 
-						<label><b>ID</b></label> <input type="text" name="updateID" id="updateId" readonly>
+						<label><b>ID</b></label> 
+						<input type="text" name="updateID" id="updateId" readonly>
 						<label><b>Name</b></label> 
 						<input type="text" name="updateName" id="updateName"> 
 						<label><b>Password</b></label>

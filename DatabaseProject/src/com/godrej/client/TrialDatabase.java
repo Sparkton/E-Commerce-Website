@@ -25,7 +25,6 @@ public class TrialDatabase extends HttpServlet {
 		Connection conn = util.getConn();
 		Statement stmt = null;
 		try{
-			Class.forName(util.getJDBC_Driver());
 			String sql = "SELECT * FROM Persons";
 			stmt = conn.createStatement();
 			ResultSet rs =stmt.executeQuery(sql);

@@ -15,15 +15,13 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script>
-	function pAdd(x) {
+	function PdtBuyLocal(x) {
 		var id = x;
-		var check = confirm("Are you sure?");
-		if (check == true) {
 			$.ajax({
-				method : "GET",
+				method : "POST",
 				url : "PdtBuy",
 				data : {
-					"PID" : id
+					"PID" : x
 				},
 				datatype : "html",
 				success : function() {
@@ -34,7 +32,6 @@
 					alert("Error");
 				}
 			});
-		}
 	}
 	var value = 0;
 	$(document).ready(function() {
@@ -225,7 +222,7 @@ input {
 	<br>
 	<br>
 	<div class="container" id="myCont">
-		<h1>User Data</h1>
+		<h1>Products</h1>
 		<!-- <table style="width=20%" id="myTable"> -->
 
 		<table class="table table-striped" id="myTable">
@@ -247,31 +244,35 @@ input {
 			<%@page import="java.sql.PreparedStatement"%>
 			<%@page import="java.sql.ResultSet"%>
 			<%
-				DbConnection util = new DbConnection();
-				Connection conn = util.getConn();
+				Connection conn = null;
+				Statement stmt = null;
 				try{
-				out.print("<tr>");
-				out.print("<td>" + request.getAttribute("PID") + "</td>");
-				out.print("<td>" + request.getAttribute("Name") + "</td>");
-				out.print("<td>" + request.getAttribute("Category") + "</td>");
-				out.print("<td>" + request.getAttribute("Price") + "</td>");
-				out.print("<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='pAdd("
-								+ request.getAttribute("PID")+ ")'>Delete</button><br></td></tr>");
-				out.print("</tr>");
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-				finally{
-					try{
-					if(conn != null) {
-						conn.close();
+					DbConnection util = new DbConnection();
+					conn = util.getConn();
+					stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery("select * from Product ORDER BY PID ASC");
+					while (rs.next()) {
+						out.print("<td>" + rs.getInt("PID") + "</td>");
+						out.print("<td>" + rs.getString("NAME") + "</td>");
+						out.print("<td>" + rs.getString("CATEGORY") + "</td>");
+						out.print("<td>" + rs.getInt("PRICE") + "</td>");
+							out.print("<td><button id='buyButton'  type='button' class='button' onclick='PdtBuy("
+									+ rs.getInt("PID") + ")'>Purchase</button></td>");
+						out.print("</tr>");
 					}
-/* 					if(stmt != null) {
-						stmt.close();
-					} */
-				} catch (Exception e) {
+				}catch (Exception e) {
 					e.printStackTrace();
-				}
+				} finally {
+					try {
+						if (conn != null) {
+							conn.close();
+						}
+						if (stmt != null) {
+							stmt.close();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			%>
 

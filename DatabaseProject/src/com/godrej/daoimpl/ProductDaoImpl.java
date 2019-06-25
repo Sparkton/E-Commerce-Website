@@ -16,17 +16,17 @@ public class ProductDaoImpl implements ProductDao{
 	private static List<Product> pdtList = new ArrayList<Product>();
 	private List<Product> tempList = new ArrayList<Product>();
 	static int ctr=0;
-	DbConnection util = new DbConnection();
 	public List<Product> getPdtList() {
 		return pdtList;
 	}
 	@Override
 	public List<Product> search(int ch, String s) {
 		tempList.clear();
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			if(stmt.executeUpdate("select count(1) where exists (select * from Product)") == 1)
 				System.out.println("\nList Empty");
@@ -114,12 +114,12 @@ public class ProductDaoImpl implements ProductDao{
 	}
 	@Override
 	public boolean insert(Product product) {
-		DbConnection util = new DbConnection();
 		int check;
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			while(true) {
 				ctr+=1;
@@ -164,10 +164,11 @@ public class ProductDaoImpl implements ProductDao{
 	@Override
 	public List<Product> update(int id, String s, int option) {
 		tempList.clear();
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			if(stmt.executeUpdate("select * from Product") >0) {
 				PreparedStatement ps = conn.prepareStatement("UPDATE users SET ? = '?' WHERE USERID = '"+id+"'");
@@ -212,10 +213,11 @@ public class ProductDaoImpl implements ProductDao{
 	}
 	@Override
 	public boolean delete(int id) {
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			String sql = "DELETE from PRODUCT where PID ="+id;
 			int i = stmt.executeUpdate(sql);
@@ -243,10 +245,11 @@ public class ProductDaoImpl implements ProductDao{
 	@Override
 	public List<Product> display() {
 		tempList.clear();
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("Select * from PRODUCT");
 			while(rs.next()) {

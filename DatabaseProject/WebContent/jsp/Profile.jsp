@@ -51,16 +51,11 @@ function openForm(x) {
 	document.getElementById("myCont").className = "container ";
 
 	document.getElementById("updateId").value = x;
-	document.getElementById("updateName").value = document
-			.getElementById("myTable").rows[x].cells[1].innerText;
-	document.getElementById("updatePass").value = document
-			.getElementById("myTable").rows[x].cells[2].innerText;
-	document.getElementById("updateState").value = document
-			.getElementById("myTable").rows[x].cells[3].innerText;
-	document.getElementById("updateCity").value = document
-			.getElementById("myTable").rows[x].cells[4].innerText;
-	document.getElementById("updatePin").value = document
-			.getElementById("myTable").rows[x].cells[5].innerText;
+	document.getElementById("updateName").value = document.getElementById("myTable").rows[1].cells[1].innerText;
+	document.getElementById("updatePass").value = document.getElementById("myTable").rows[1].cells[2].innerText;
+	document.getElementById("updateState").value = document.getElementById("myTable").rows[1].cells[3].innerText;
+	document.getElementById("updateCity").value = document.getElementById("myTable").rows[1].cells[4].innerText;
+	document.getElementById("updatePin").value = document.getElementById("myTable").rows[1].cells[5].innerText;
 }
 
 function closeForm() {
@@ -305,13 +300,17 @@ input {
 					<form action="UserUpdate" class="form-container" method="post"
 						onsubmit="return validateFormUpdate()">
 						<h1>Update</h1>
-
-						<label><b>ID</b></label> <input type="text" name="updateID"
-							id="updateId" readonly> <label><b>Name</b></label> <input
-							type="text" name="updateName" id="updateName"> <label><b>Password</b></label>
-						<input type="text" name="updatePass" id="updatePass"> <label><b>State</b></label>
-						<input type="text" name="updateState" id="updateState"> <label><b>City</b></label>
-						<input type="text" name="updateCity" id="updateCity"> <label><b>Pin</b></label>
+						<label><b>ID</b></label> 
+						<input type="text" name="updateID" id="updateId" readonly>
+						<label><b>Name</b></label> 
+						<input type="text" name="updateName" id="updateName">
+						<label><b>Password</b></label>
+						<input type="text" name="updatePass" id="updatePass"> 
+						<label><b>State</b></label>
+						<input type="text" name="updateState" id="updateState"> 
+						<label><b>City</b></label>
+						<input type="text" name="updateCity" id="updateCity"> 
+						<label><b>Pin</b></label>
 						<input type="text" name="updatePin" id="updatePin"><br>
 
 						<button type="submit" class="btn" onclick="closeForm()">Update</button>

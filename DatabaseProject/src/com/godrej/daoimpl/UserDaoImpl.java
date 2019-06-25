@@ -16,7 +16,6 @@ public class UserDaoImpl implements UserDao{
 	private static List<User> userList = new ArrayList<User>();
 	private List<User> tempList = new ArrayList<User>();
 	static int ctr=0;
-	DbConnection util = new DbConnection();
 	public List<User> getUserList() {
 		return userList;
 	}
@@ -24,10 +23,11 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public List<User> search(int ch, String s) {
 		tempList.clear();
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			if(stmt.executeUpdate("select count(1) where exists (select * from Users)") == 1)
 				System.out.println("List Empty");
@@ -129,12 +129,12 @@ public class UserDaoImpl implements UserDao{
 	public boolean insert(User user) {
 		ctr+=1;
 		int check;
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
-			Class.forName(util.getJDBC_Driver());
 			while(true) {
 				String sql = "select USERID from Users where userid = "+ctr;
 				int flag = stmt.executeUpdate(sql);
@@ -209,14 +209,15 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public List<User> update(int id, String s, int option) {
 		tempList.clear();
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			if(stmt.executeUpdate("select * from Users") >0)
 			{
-				PreparedStatement ps = conn.prepareStatement("UPDATE users SET ? = ? WHERE USERID = "+id);
+				PreparedStatement ps = conn.prepareStatement("UPDATE USERS SET ? = ? WHERE USERID = ?");
 				switch(option)
 				{
 				case 1:
@@ -240,7 +241,8 @@ public class UserDaoImpl implements UserDao{
 					ps.setInt(2, Integer.parseInt(s));
 					break;
 				}
-				ps.executeQuery();
+				ps.setInt(3, id);
+				ps.executeUpdate();
 			}
 			else
 				return null;
@@ -290,10 +292,11 @@ public class UserDaoImpl implements UserDao{
 	}
 	@Override
 	public boolean delete(int id) {
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			String sql = "DELETE from USERS where USERID ="+id;
 			int i = stmt.executeUpdate(sql);
@@ -327,10 +330,11 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public List<User> display() {
 		tempList.clear();
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("Select * from Users");
 			while(rs.next()) {

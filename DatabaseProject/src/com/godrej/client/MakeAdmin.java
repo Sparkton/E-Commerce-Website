@@ -21,12 +21,12 @@ public class MakeAdmin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int i = Integer.parseInt(request.getParameter("ID"));
 		int check = Integer.parseInt(request.getParameter("check"));
-		DbConnection util = new DbConnection();
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
-			Class.forName(util.getJDBC_Driver());
 			if(check==1)
 				stmt.execute("update Users set isAdmin = 1 where USERID = "+i);
 			else

@@ -22,7 +22,6 @@ public class PdtCartDel extends HttpServlet {
 		Connection conn = util.getConn();
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
 			stmt = conn.createStatement();
 			stmt.execute("delete FROM ProductBought WHERE USERID = '"+request.getParameter("ID")+"'AND PID = '"+x+"'");
 		}catch(Exception e) {

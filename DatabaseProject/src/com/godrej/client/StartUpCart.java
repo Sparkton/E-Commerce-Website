@@ -2,7 +2,6 @@ package com.godrej.client;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -12,23 +11,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.godrej.util.DbConnection;
 
 @WebServlet("/StartUpCart")
 public class StartUpCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		doPost(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ResultSet a = null;
-		DbConnection util = new DbConnection();
 		String id = request.getParameter("ID");
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			String sql = "select * FROM ProductBought where USERID = '"+id+"'";
 			a = stmt.executeQuery(sql);

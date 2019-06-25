@@ -21,7 +21,6 @@ import com.godrej.util.DbConnection;
 @WebServlet("/newLogin")
 public class NewLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	DbConnection util = new DbConnection();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Try POST");
 	}
@@ -29,22 +28,26 @@ public class NewLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uName = request.getParameter("uName");
 		String uPass = request.getParameter("pass");
-		Connection conn = util.getConn();
+		Connection conn = null;
 		Statement stmt = null;
 		try {
-			Class.forName(util.getJDBC_Driver());
+			DbConnection util = new DbConnection();
+			conn = util.getConn();
 			stmt = conn.createStatement();
 			String sql = "select  * from Login where EMAILID = '"+uName+"' AND PASS = '"+uPass+"'";
 			int i = stmt.executeUpdate(sql);
 			if(i==1){
-				ResultSet rs = stmt.executeQuery("select * from Users where EMAILID = '"+uName+"' AND PASS = '"+uPass+"'");
+				ResultSet rs = stmt.executeQuery("select * from Users where EMAIL = '"+uName+"' AND PASS = '"+uPass+"'");
+				rs.next();
 				request.setAttribute("ID", rs.getInt("USERID")); 
 				request.setAttribute("uName",rs.getString("EMAIL")); 
 				request.setAttribute("uPass", rs.getString("Pass"));
 				request.setAttribute("State",rs.getString("State"));
 				request.setAttribute("City", rs.getString("City"));
 				request.setAttribute("Pincode", rs.getInt("Pin"));
-				ResultSet temp = stmt.executeQuery("select isAdmin from USERS where EmailID = "+uName+" AND PASS = "+uPass);
+				ResultSet temp = stmt.executeQuery("select isAdmin from USERS where USERID = '"+rs.getInt("USERID")+"'");
+				temp.next();
+				 request.getSession().setAttribute("authenticated", true);
 				if(temp.getInt("isAdmin")==1) {
 					System.out.println("BOIs an admin");
 					RequestDispatcher rd = request.getRequestDispatcher("StartUpPage");//Send to Admin Page

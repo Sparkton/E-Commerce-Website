@@ -120,8 +120,7 @@ label {
 		<form method="post" onsubmit="return isEmpty()" action="newLogin"
 			method="post" style="display: grid;">
 			<label>Email-Id : </label> <input type="text" name="uName" id="uName">
-			<label><br>Password : </label> <input type="text" name="pass"
-				id="pass"> <br>
+			<label><br>Password : </label> <input type="text" name="pass" id="pass"> <br>
 			<button type="submit" class="button">SUBMIT</button>
 			<br>
 			<h6 style="text-align-last: center;">

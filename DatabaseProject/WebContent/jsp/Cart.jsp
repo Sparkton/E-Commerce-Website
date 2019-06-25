@@ -245,13 +245,13 @@ input {
 			<%@page import="java.sql.PreparedStatement"%>
 			<%@page import="java.sql.ResultSet"%>
 			<%
-				DbConnection util = new DbConnection();
-				Connection conn = util.getConn();
 				Statement stmt = null;
+				Connection conn = null;
 				ResultSet rs = (ResultSet) request.getAttribute("productsList");
 				int ctr = 0;
 				try {
-					Class.forName(util.getJDBC_Driver());
+					DbConnection util = new DbConnection();
+					conn = util.getConn();
 					while (rs.next()) {
 						String sql = "select * FROM PRODUCTS WHERE PID = '"+rs.getInt(1)+"'";//check if 1 or 2, make same change belw as well
 						stmt = conn.createStatement();
@@ -263,11 +263,11 @@ input {
 						out.print("<td>" + rs1.getInt(4) + "</td>");
 						ctr+=rs.getInt(4);
 						out.print(
-								"<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
+								"<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='pDelete("
 										+ rs1.getInt(1) + ")'>Delete</button><br></td></tr>");
 						out.print("</tr>");
 					}
-					out.println("<tr><td></td><td></td><td>Total:</td><td>"+ctr+"</td></tr>");
+					out.println("<tr><td></td><td></td><td></td><td>Total:</td><td>"+ctr+"</td></tr>");
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {

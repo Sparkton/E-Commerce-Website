@@ -36,6 +36,25 @@
 			});
 		}
 	}
+	function PdtBuyLocal(x) {
+		var id = x;
+			$.ajax({
+				method : "POST",
+				url : "PdtBuy",
+				data : {
+					"PID" : x,
+
+				},
+				datatype : "html",
+				success : function() {
+					alert("Value sent to Delete ");
+					window.location.reload();
+				},
+				error : function() {
+					alert("Error");
+				}
+			});
+	}
 	var value = 0;
 	$(document).ready(function() {
 		$("input").focus(function() {
@@ -67,12 +86,9 @@
 		document.getElementById("myModal").style.display = "block";
 
 		document.getElementById("updateId").value = x;
-		document.getElementById("updateName").value = document
-				.getElementById("myTable").rows[x].cells[1].innerText;
-		document.getElementById("updateCat").value = document
-				.getElementById("myTable").rows[x].cells[2].innerText;
-		document.getElementById("updatePrice").value = document
-				.getElementById("myTable").rows[x].cells[3].innerText;
+		document.getElementById("updateName").value = document.getElementById("myTable").rows[x].cells[1].innerText;
+		document.getElementById("updateCat").value = document.getElementById("myTable").rows[x].cells[2].innerText;
+		document.getElementById("updatePrice").value = document.getElementById("myTable").rows[x].cells[3].innerText;
 	}
 
 	function closeForm() {
@@ -271,7 +287,7 @@ input {
 			<a href="StartUpPage">User</a>
 		</div>
 		<div style:align="right">
-			<a href="StartUpLogin">Login</a> <a href="StartUpRegister">Register</a>
+			<a href="StartUpCart">Cart</a> <a href="UserDisplay">LogOut</a> 
 		</div>
 	</div>
 	<br><br><br>
@@ -311,14 +327,14 @@ input {
 					out.print("<button id='deleteButton'  type='button' class='button' onclick='pDelete(" + i.getProduct_Id()
 							+ ")'>Delete</button><br></td></tr>");
 				} */
-				 DbConnection util = new DbConnection();
 				out.print("<tr>");
 				Statement stmt = null;
-				Connection conn = util.getConn();
+				Connection conn = null;
 				try{
-					Class.forName(util.getJDBC_Driver());
+				 	DbConnection util = new DbConnection();
+					conn = util.getConn();
 					stmt = conn.createStatement();
-					ResultSet rs = stmt.executeQuery("select * from Product");
+					ResultSet rs = stmt.executeQuery("select * from Product ORDER BY PID ASC");
 					while (rs.next()) {
 						out.print("<td>" + rs.getInt("PID") + "</td>");
 						out.print("<td>" + rs.getString("NAME") + "</td>");
@@ -326,10 +342,10 @@ input {
 						out.print("<td>" + rs.getInt("PRICE") + "</td>");
 						out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
 										+ rs.getInt("PID") + ")'>Update</button>");
-						out.print("<button id='deleteButton'  type='button' class='button' onclick='uDelete("
+						out.print("<button id='deleteButton'  type='button' class='button' onclick='pDelete("
 								+ rs.getInt("PID") + ")'>Delete</button><br></td>");
 
-							out.print("<td><button id='buyButton'  type='button' class='button' onclick='buyPdt("
+							out.print("<td><button id='buyButton'  type='button' class='button' onclick='PdtBuyLocal("
 									+ rs.getInt("PID") + ")'>Purchase</button></td>");
 						out.print("</tr>");
 					}
