@@ -26,7 +26,7 @@ public class PdtBuy extends HttpServlet {
 			conn = util.getConn();
 			stmt = conn.createStatement();
 			PreparedStatement ps = conn.prepareStatement("insert into PRODUCTBOUGHT values(?,?)");
-			ps.setInt(1, (Integer)request.getAttribute("ID"));
+			ps.setInt(1, (Integer)request.getSession().getAttribute("ID"));
 			ps.setInt(2, id);
 			ps.executeUpdate();
 		}catch(Exception e) {
@@ -39,7 +39,7 @@ public class PdtBuy extends HttpServlet {
 				if(stmt != null) {
 					stmt.close();
 				}
-			} catch (Exception e) {
+			}catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

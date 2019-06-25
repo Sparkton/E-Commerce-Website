@@ -25,7 +25,7 @@
 				},
 				datatype : "html",
 				success : function() {
-					alert("Value sent to Delete ");
+					alert("Product Added to Cart");
 					window.location.reload();
 				},
 				error : function() {
@@ -212,11 +212,9 @@ input {
 			<a href="DisplayProfile"> Profile</a>
 		</div>
 		<div style:align="right">
+		<a href="StartUpCart">Cart</a>
 			<a href="UserDisplay">LogOut</a>
 		</div>
-	</div>
-	<div>
-		<a href="StartUpCart">Cart</a>
 	</div>
 	<br>
 	<br>
@@ -256,7 +254,7 @@ input {
 						out.print("<td>" + rs.getString("NAME") + "</td>");
 						out.print("<td>" + rs.getString("CATEGORY") + "</td>");
 						out.print("<td>" + rs.getInt("PRICE") + "</td>");
-							out.print("<td><button id='buyButton'  type='button' class='button' onclick='PdtBuy("
+							out.print("<td><button id='buyButton'  type='button' class='button' onclick='PdtBuyLocal("
 									+ rs.getInt("PID") + ")'>Purchase</button></td>");
 						out.print("</tr>");
 					}

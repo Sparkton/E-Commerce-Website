@@ -33,6 +33,7 @@ function uDelete(x) {
 			}
 		});
 	}
+	response.sendRedirect("StartUpLogin");
 }
 var value = 0;
 $(document).ready(function() {
@@ -257,7 +258,7 @@ input {
 	<br>
 	<br>
 	<div class="container" id="myCont">
-		<h1>User Data</h1>
+		<h1>Profile</h1>
 		<!-- <table style="width=20%" id="myTable"> -->
 
 		<table class="table table-striped" id="myTable">
@@ -275,21 +276,49 @@ input {
 			<%@page import="com.godrej.service.UserService"%>
 			<%@page import="com.godrej.serviceimpl.UserServiceImpl"%>
 			<%@page import="java.util.ArrayList"%>
+			<%@page import="java.sql.Statement"%>
+			<%@page import="java.sql.Connection"%>
+			<%@page import="java.sql.PreparedStatement"%>
+			<%@page import="java.sql.ResultSet"%>
+			<%@page import="com.godrej.util.DbConnection"%>
+			
 			<%
+				DbConnection util = new DbConnection();
+			Statement stmt = null;
+			Connection conn = null;
+			try{
+				conn = util.getConn();
+				stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery("select * from USERS WHERE USERID = "+request.getSession().getAttribute("ID"));
 				out.print("<tr>");
-				out.print("<td>" + request.getAttribute("ID") + "</td>");
-				out.print("<td>" + request.getAttribute("uName") + "</td>");
-				out.print("<td>" + request.getAttribute("uPass") + "</td>");
-				out.print("<td>" + request.getAttribute("State") + "</td>");
-				out.print("<td>" + request.getAttribute("City") + "</td>");
-				out.print("<td>" + request.getAttribute("Pincode") + "</td>");
+				rs.next();
+				out.print("<td>" + rs.getInt(1) + "</td>");
+				out.print("<td>" + rs.getString(2) + "</td>");
+				out.print("<td>" + rs.getString(3) + "</td>");
+				out.print("<td>" + rs.getString(4) + "</td>");
+				out.print("<td>" + rs.getString(5) + "</td>");
+				out.print("<td>" + rs.getInt(6) + "</td>");
 				out.print(
 						"<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
-								+ request.getAttribute("ID") + ")'>Update</button>");
+								+ rs.getInt(1) + ")'>Update</button>");
 				/* out.print(
 						"<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='uDelete("
-								+ request.getAttribute("ID")+ ")'>Delete</button><br></td></tr>"); */
+								+ rs.getInt(1)+ ")'>Delete</button><br></td></tr>"); */
 				out.print("</tr>");
+			}catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (conn != null) {
+						conn.close();
+					}
+					if (stmt != null) {
+						stmt.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 			%>
 
 			</tbody>

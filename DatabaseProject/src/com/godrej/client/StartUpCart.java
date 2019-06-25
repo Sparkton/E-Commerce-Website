@@ -22,8 +22,11 @@ public class StartUpCart extends HttpServlet {
 		doPost(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sess = request.getSession();
+		if(!(boolean)sess.getAttribute("authenticated")==true || sess.getAttribute("authenticated") == null)
+			response.sendRedirect("StartUpPage");
 		ResultSet a = null;
-		String id = request.getParameter("ID");
+		String id = (String) request.getSession().getAttribute("ID");
 		Connection conn = null;
 		Statement stmt = null;
 		try {

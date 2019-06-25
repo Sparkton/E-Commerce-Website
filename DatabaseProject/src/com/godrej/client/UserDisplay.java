@@ -18,7 +18,8 @@ public class UserDisplay extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// sess.invalidate();
+		HttpSession sess = request.getSession();
+		sess.invalidate();
 		response.sendRedirect("StartUpLogin");
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

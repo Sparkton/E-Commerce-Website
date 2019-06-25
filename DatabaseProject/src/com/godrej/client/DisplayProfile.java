@@ -8,20 +8,29 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class DisplaySingle
  */
-@WebServlet("/DisplaySingle")
+@WebServlet("/DisplayProfile")
 public class DisplayProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher userPage = request.getRequestDispatcher("jsp/Profile.jsp");
-		userPage.forward(request, response);
+		doGet(request,response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher userPage = request.getRequestDispatcher("jsp/Profile.jsp");
+		HttpSession sess = request.getSession();
+		if(!(boolean)sess.getAttribute("authenticated")==true || sess.getAttribute("authenticated") == null)
+			response.sendRedirect("StartUpPage");
+		RequestDispatcher userPage;
+		if((boolean)sess.getAttribute("AdminAccess")==true) 
+			userPage = request.getRequestDispatcher("StartUpPage");
+		else 
+		userPage = request.getRequestDispatcher("jsp/Profile.jsp");
+		
 		userPage.forward(request, response);
+		
 	}
 
 }
