@@ -21,8 +21,8 @@ public class DisplayProfile extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess.getAttribute("authenticated") == null)
-			response.sendRedirect("StartUpPage");
+		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+			response.sendRedirect("StartUpLogin");
 		RequestDispatcher userPage;
 		if((boolean)sess.getAttribute("AdminAccess")==true) 
 			userPage = request.getRequestDispatcher("StartUpPage");

@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.godrej.util.DbConnection;
 
@@ -17,7 +18,10 @@ import com.godrej.util.DbConnection;
 public class PdtBuy extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	int id;		
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		HttpSession sess = request.getSession();
+		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+			response.sendRedirect("StartUpLogin");
 		id = Integer.parseInt(request.getParameter("PID"));
 		Connection conn = null;
 		Statement stmt = null;

@@ -35,6 +35,10 @@ function uDelete(x) {
 	}
 	response.sendRedirect("StartUpLogin");
 }
+function randomFunction(){
+	/* if((boolean)request.getSession().getAttribute()!== true)
+		response.sendRedirect("UserDisplay"); */
+}
 var value = 0;
 $(document).ready(function() {
 	$("input").focus(function() {
@@ -245,7 +249,7 @@ input {
 </style>
 
 </head>
-<body>
+<body onload = "randomFunction()">
 	<div class="navbar">
 		<div style:align="left">
 			<a href="StartUpAllProducts">Products</a>

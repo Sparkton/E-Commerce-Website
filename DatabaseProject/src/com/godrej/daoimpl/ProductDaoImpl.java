@@ -15,7 +15,6 @@ public class ProductDaoImpl implements ProductDao{
 
 	private static List<Product> pdtList = new ArrayList<Product>();
 	private List<Product> tempList = new ArrayList<Product>();
-	static int ctr=0;
 	public List<Product> getPdtList() {
 		return pdtList;
 	}
@@ -121,28 +120,19 @@ public class ProductDaoImpl implements ProductDao{
 			DbConnection util = new DbConnection();
 			conn = util.getConn();
 			stmt = conn.createStatement();
-			while(true) {
-				ctr+=1;
-				String sql = "select PID from Product where pid = "+ctr;
-				int flag = stmt.executeUpdate(sql);
-				if(flag==0)
-					break;
-			}
 			stmt = null;
 			stmt = conn.createStatement();
-			PreparedStatement ps = conn.prepareStatement("insert into product values(?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("insert into product values(seq_pdt.nextval,?,?,?)");
 			if(stmt.executeUpdate("Select * from Product WHERE name = '"+ product.getProduct_Name()+"'")==0) {
-				ps.setInt(1, ctr);
-				ps.setString(2, product.getProduct_Name());
-				ps.setString(3, product.getProduct_Cat());
-				ps.setInt(4, product.getProduct_Price());
+				ps.setString(1, product.getProduct_Name());
+				ps.setString(2, product.getProduct_Cat());
+				ps.setInt(3, product.getProduct_Price());
 				check = ps.executeUpdate();
 				if(check==1)
 					return true;
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
-			ctr-=1;
 			return false;
 		}finally {
 			try {
@@ -171,25 +161,26 @@ public class ProductDaoImpl implements ProductDao{
 			conn = util.getConn();
 			stmt = conn.createStatement();
 			if(stmt.executeUpdate("select * from Product") >0) {
-				PreparedStatement ps = conn.prepareStatement("UPDATE users SET ? = '?' WHERE USERID = '"+id+"'");
+				PreparedStatement ps = null;
 				switch(option)
 				{
 				case 1:
-					ps.setString(1, "NAME");
-					ps.setString(2, s);
+					ps = conn.prepareStatement("UPDATE users SET NAME = ? WHERE USERID = ?");
+					ps.setString(1, s);
 //					product.setProduct_Name(s);
 					break;
 				case 2:
-					ps.setString(1, "CATEGORY");
-					ps.setString(2, s);
+					ps = conn.prepareStatement("UPDATE users SET CATEGORY = ? WHERE USERID = ?");
+					ps.setString(1, s);
 //					product.setProduct_Cat(s);
 					break;
 				case 3:
-					ps.setString(1, "PRICE");
-					ps.setInt(2, Integer.parseInt(s));
+					ps = conn.prepareStatement("UPDATE users SET PRICE = ? WHERE USERID = ?");
+					ps.setInt(1, Integer.parseInt(s));
 //					product.setProduct_Price(Integer.parseInt(s));
 					break;
 				}
+				ps.setInt(2,id);
 				ps.executeQuery();
 			}
 		}catch(Exception e) {

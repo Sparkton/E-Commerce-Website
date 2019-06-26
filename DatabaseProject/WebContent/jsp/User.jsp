@@ -119,6 +119,8 @@
 			$('#myTable').css("display", "none");
 		else
 			$('#myTable').css("display", "bloc");
+		/* if((boolean)request.getSession().getAttribute()!== true)
+			response.sendRedirect("UserDisplay"); */
 	}
 
 	function openForm(x) {

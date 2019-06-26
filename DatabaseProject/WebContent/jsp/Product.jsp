@@ -36,6 +36,7 @@
 			});
 		}
 	}
+	
 	function PdtBuyLocal(x) {
 		var id = x;
 			$.ajax({
@@ -47,7 +48,7 @@
 				},
 				datatype : "html",
 				success : function() {
-					alert("Value sent to Delete ");
+					alert("Product Added to Cart");
 					window.location.reload();
 				},
 				error : function() {
@@ -79,8 +80,9 @@
 			$('#myTable').css("display","none");
 		else
 			$('#myTable').css("display","bloc");
+		if((boolean)request.getSession().getAttribute()!== true)
+			response.sendRedirect("UserDisplay");
 	}
-
 	function openForm(x) {
 		document.getElementById("myForm").style.display = "block";
 		document.getElementById("myModal").style.display = "block";

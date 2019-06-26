@@ -15,9 +15,11 @@ public class StartUpPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession sess = request.getSession();
-		if((boolean)sess.getAttribute("authenticated")==false || sess.getAttribute("authenticated") == null)
-			response.sendRedirect("StartUpPage");
+		/*HttpSession sess = request.getSession();
+		 *
+		 * if((boolean)sess.getAttribute("authenticated")==false || sess == null)
+		 * response.sendRedirect("StartUpLogin");
+		 */
 		RequestDispatcher rd = request.getRequestDispatcher("jsp/User.jsp");
 		rd.forward(request, response);
 	}

@@ -27,6 +27,7 @@ public class NewLogin extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sess = request.getSession();
 		String uName = request.getParameter("uName");
 		String uPass = request.getParameter("pass");

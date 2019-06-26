@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class DbConnection {
 	final String JDBC_Driver = "oracle.jdbc.driver.OracleDriver";
 	final String USER = "system";
-	final String PASS = "system";//"seema@2019";
+	final String PASS = "seema@2019";//"system";
 	Connection conn = null;
 	public DbConnection(){
 		try {

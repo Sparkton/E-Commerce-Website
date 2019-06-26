@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.godrej.service.UserService;
 import com.godrej.serviceimpl.UserServiceImpl;
@@ -23,6 +24,9 @@ public class UserDel extends HttpServlet {
 		System.out.println("Try POST for Delete");
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sess = request.getSession();
+		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+			response.sendRedirect("StartUpLogin");
 		int UserId = Integer.parseInt(request.getParameter("ID"));
 		userService.delete(UserId);
 		RequestDispatcher userPage = request.getRequestDispatcher("UserDisplay");

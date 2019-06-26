@@ -21,7 +21,7 @@
 		if (check == true) {
 			$.ajax({
 				method : "POST",
-				url : "PdtDel",
+				url : "PdtCartDel",
 				data : {
 					"productCartDel" : id
 				},
@@ -48,6 +48,8 @@
 
 	function random_bg_color() {
 
+		/* if((boolean)request.getSession().getAttribute()!== true)
+			response.sendRedirect("UserDisplay"); */
 		var x = Math.floor(Math.random() * 256);
 		var y = Math.floor(Math.random() * 256);
 		var z = Math.floor(Math.random() * 256);
@@ -61,6 +63,7 @@
 		else
 			$('#myTable').css("display", "bloc");
 	}
+
 </script>
 <style>
 table {
@@ -247,24 +250,24 @@ input {
 			<%
 				Statement stmt = null;
 				Connection conn = null;
-				ResultSet rs = (ResultSet) request.getAttribute("productsList");
+				int id = (int)request.getSession().getAttribute("ID");
 				int ctr = 0;
 				try {
 					DbConnection util = new DbConnection();
 					conn = util.getConn();
+					//String sql1 = "select * FROM PRODUCT WHERE PID = '"+rs.getInt(1)+"'";//check if 1 or 2, make same change belw as well
+					String sql = "select * FROM Product INNER JOIN ProductBought ON ProductBought.PID = Product.PID WHERE USERID = "+id+" ORDER BY PRODUCT.PID ASC";
+					stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery(sql);
 					while (rs.next()) {
-						String sql = "select * FROM PRODUCTS WHERE PID = '"+rs.getInt(1)+"'";//check if 1 or 2, make same change belw as well
-						stmt = conn.createStatement();
-						ResultSet rs1 = stmt.executeQuery(sql);
 						out.print("<tr>");
-						out.print("<td>" + rs1.getInt(1) + "</td>");
-						out.print("<td>" + rs1.getString(2) + "</td>");
-						out.print("<td>" + rs1.getString(3) + "</td>");
-						out.print("<td>" + rs1.getInt(4) + "</td>");
+						out.print("<td>" + rs.getInt(1) + "</td>");
+						out.print("<td>" + rs.getString(2) + "</td>");
+						out.print("<td>" + rs.getString(3) + "</td>");
+						out.print("<td>" + rs.getInt(4) + "</td>");
 						ctr+=rs.getInt(4);
-						out.print(
-								"<button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='pDelete("
-										+ rs1.getInt(1) + ")'>Delete</button><br></td></tr>");
+						out.print("<td><button id='deleteButton' style='margin-right:16px' type='button' class='button' onclick='pDelete("
+										+ rs.getInt(1) + ")'>Delete</button></td>");
 						out.print("</tr>");
 					}
 					out.println("<tr><td></td><td></td><td></td><td>Total:</td><td>"+ctr+"</td></tr>");

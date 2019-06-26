@@ -21,7 +21,7 @@ public class PdtDisplay extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Reached post");
-		response.sendRedirect("StartUpPageProduct");
+		response.sendRedirect("StartUpLogin");
 	}
 
 }

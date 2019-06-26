@@ -16,8 +16,8 @@ public class StartUpAllProducts extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess.getAttribute("authenticated") == null)
-			response.sendRedirect("StartUpPage");
+		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+			response.sendRedirect("StartUpLogin");
 		RequestDispatcher rd = request.getRequestDispatcher("jsp/AllProduct.jsp");
 		rd.forward(request, response);
 	}
