@@ -21,9 +21,10 @@ public class UserDisplay extends HttpServlet {
 		HttpSession sess = request.getSession();
 		sess.invalidate();
 		response.sendRedirect("StartUpLogin");
+		//response.sendRedirect("jsp/NewFile.jsp");
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("StartUpPage");
+		doGet(request, response);
 	}
 
 }

@@ -128,17 +128,18 @@
 		document.getElementById("myModal").style.display = "block";
 		document.getElementById("myCont").className = "container ";
 
-		document.getElementById("updateId").value = x;
+		document.getElementById("updateId").value = document
+		.getElementById("myTable").rows[x+1].cells[0].innerText;
 		document.getElementById("updateName").value = document
-				.getElementById("myTable").rows[x].cells[1].innerText;
+				.getElementById("myTable").rows[x+1].cells[1].innerText;
 		document.getElementById("updatePass").value = document
-				.getElementById("myTable").rows[x].cells[2].innerText;
+				.getElementById("myTable").rows[x+1].cells[2].innerText;
 		document.getElementById("updateState").value = document
-				.getElementById("myTable").rows[x].cells[3].innerText;
+				.getElementById("myTable").rows[x+1].cells[3].innerText;
 		document.getElementById("updateCity").value = document
-				.getElementById("myTable").rows[x].cells[4].innerText;
+				.getElementById("myTable").rows[x+1].cells[4].innerText;
 		document.getElementById("updatePin").value = document
-				.getElementById("myTable").rows[x].cells[5].innerText;
+				.getElementById("myTable").rows[x+1].cells[5].innerText;
 	}
 
 	function closeForm() {
@@ -466,6 +467,7 @@ input:checked+.slider:before {
 				out.print("<tr>");
 				Connection conn = null;
 				Statement stmt = null;
+				int ctr = 0;
 				try {
 					DbConnection util = new DbConnection();
 					conn = util.getConn();
@@ -478,21 +480,16 @@ input:checked+.slider:before {
 						out.print("<td>" + rs.getString("STATE") + "</td>");
 						out.print("<td>" + rs.getString("CITY") + "</td>");
 						out.print("<td>" + rs.getInt("PIN") + "</td>");
-						out.print(
-								"<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
-										+ rs.getInt("USERID") + ")'>Update</button>");
-						out.print("<button id='deleteButton'  type='button' class='button' onclick='uDelete("
-								+ rs.getInt("USERID") + ")'>Delete</button><br></td>");
+						out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("+ctr+");'>Update</button>"); //document.getElementsByTagName(\"tr\").rowIndex
+						//+ rs.getInt("USERID")
+						out.print("<button id='deleteButton'  type='button' class='button' onclick='uDelete("+rs.getInt("USERID")+")'>Delete</button><br></td>");
 
 						if (rs.getInt("isAdmin") == 1) {
-							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("
-											+ rs.getInt("USERID")
-											+ ",0)' checked></input><span class='slider round'></span></label></td>");
+							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("+rs.getInt("USERID")+",0)' checked></input><span class='slider round'></span></label></td>");
 						} else
-							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("
-											+ rs.getInt("USERID")
-											+ ",1)'></input><span class='slider round'></span></label></td>");
+							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("+rs.getInt("USERID")+" ,1)'></input><span class='slider round'></span></label></td>");
 						out.print("</tr>");
+						ctr++;
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

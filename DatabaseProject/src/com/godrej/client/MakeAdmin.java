@@ -21,8 +21,13 @@ public class MakeAdmin extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+		try{
+			if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
 			response.sendRedirect("StartUpLogin");
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+			response.sendRedirect("StartUpLogin");
+		}
 		int i = Integer.parseInt(request.getParameter("ID"));
 		int check = Integer.parseInt(request.getParameter("check"));
 		Connection conn = null;
@@ -33,9 +38,9 @@ public class MakeAdmin extends HttpServlet {
 			stmt = conn.createStatement();
 			if(check==1)
 				stmt.execute("update Users set isAdmin = 1 where USERID = "+i);
-			else
-				stmt.execute("update Users set isAdmin = 0 where USERID = "+i);				
-				
+			  else 
+				  stmt.execute("update Users set isAdmin = 0 where USERID = "+i);
+			 
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

@@ -218,15 +218,15 @@ input {
 			<a href="StartUpPageProduct">Products</a>
 		</div>
 		<div style="align:right">
-			<a href="UserDisplay">LogOut</a> <a href="DisplayProfile">
-				Profile</a>
+			<a href="UserDisplay">LogOut</a>
+			<a href="DisplayProfile">Profile</a>
 		</div>
 	</div>
 	<br>
 	<br>
 	<br>
 	<div class="container" id="myCont">
-		<h1>User Data</h1>
+		<h1>Cart</h1>
 		<!-- <table style="width=20%" id="myTable"> -->
 
 		<table class="table table-striped" id="myTable">

@@ -289,10 +289,13 @@ public class UserDaoImpl implements UserDao{
 			DbConnection util = new DbConnection();
 			conn = util.getConn();
 			stmt = conn.createStatement();
+			String sql1 = "DELETE from LOGIN where EMAIL IN (select EMAIL FROM USERS WHERE USERID = "+id+")";
 			String sql = "DELETE from USERS where USERID ="+id;
 			int i = stmt.executeUpdate(sql);
-			if(i == 1)
+			if(i == 1) {
+				stmt.execute(sql1);
 				return true;
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

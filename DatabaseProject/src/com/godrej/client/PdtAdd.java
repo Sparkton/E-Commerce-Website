@@ -23,8 +23,13 @@ public class PdtAdd extends HttpServlet {
     }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+		try{
+			if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
 			response.sendRedirect("StartUpLogin");
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+			response.sendRedirect("StartUpLogin");
+		}
 		Product pdt = new Product();
 		pdt.setProduct_Id(1);
 		pdt.setProduct_Name(request.getParameter("nameIn"));
@@ -32,7 +37,7 @@ public class PdtAdd extends HttpServlet {
 		pdt.setProduct_Price(Integer.parseInt(request.getParameter("priceIn"))); 
 		productService.insert(pdt);
 		productService.display();
-		RequestDispatcher userPage = request.getRequestDispatcher("PdtDisplay");
+		RequestDispatcher userPage = request.getRequestDispatcher("StartUpPageProduct");
 		userPage.forward(request, response);
 	}
 }

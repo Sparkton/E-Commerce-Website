@@ -130,6 +130,8 @@ public class ProductDaoImpl implements ProductDao{
 				check = ps.executeUpdate();
 				if(check==1)
 					return true;
+				else
+					return false;
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

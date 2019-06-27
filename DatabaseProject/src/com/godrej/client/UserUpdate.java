@@ -15,27 +15,28 @@ import com.godrej.serviceimpl.UserServiceImpl;
 public class UserUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UserService userService;
-    public UserUpdate() {
-    	userService = new UserServiceImpl();
-    }
+	public UserUpdate() {
+		userService = new UserServiceImpl();
+	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Try Post");
+		doPost(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int UserId = Integer.parseInt(request.getParameter("updateID"));
-		
-		  if(request.getParameter("updateName").trim().length()!=0)
-			  userService.update(UserId, request.getParameter("updateName"), 1);
-		  if(request.getParameter("updatePass").trim().length()!=0)
-			  userService.update(UserId,request.getParameter("updatePass") , 2);
-		  if(request.getParameter("updateState").trim().length()!=0)
-			  userService.update(UserId, request.getParameter("updateState"), 3);
-		  if(request.getParameter("updateCity").trim().length()!=0)
-			  userService.update(UserId, request.getParameter("updateCity"), 4);
-		  if(request.getParameter("updatePin").trim().length()!=0)
-			  userService.update(UserId, request.getParameter("updatePin"), 5);
-		 
-		RequestDispatcher userPage = request.getRequestDispatcher("UserDisplay");
+
+		if(request.getParameter("updateName").trim().length()!=0)
+			userService.update(UserId, request.getParameter("updateName"), 1);
+		if(request.getParameter("updatePass").trim().length()!=0)
+			userService.update(UserId,request.getParameter("updatePass") , 2);
+		if(request.getParameter("updateState").trim().length()!=0)
+			userService.update(UserId, request.getParameter("updateState"), 3);
+		if(request.getParameter("updateCity").trim().length()!=0)
+			userService.update(UserId, request.getParameter("updateCity"), 4);
+		if(request.getParameter("updatePin").trim().length()!=0)
+			userService.update(UserId, request.getParameter("updatePin"), 5);
+
+		RequestDispatcher userPage = request.getRequestDispatcher("DisplayProfile");
 		userPage.forward(request, response);
+
 	}
 }

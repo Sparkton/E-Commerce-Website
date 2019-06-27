@@ -80,14 +80,13 @@
 			$('#myTable').css("display","none");
 		else
 			$('#myTable').css("display","bloc");
-		if((boolean)request.getSession().getAttribute()!== true)
-			response.sendRedirect("UserDisplay");
+		
 	}
 	function openForm(x) {
 		document.getElementById("myForm").style.display = "block";
 		document.getElementById("myModal").style.display = "block";
 
-		document.getElementById("updateId").value = x;
+		document.getElementById("updateId").value = document.getElementById("myTable").rows[x].cells[0].innerText;
 		document.getElementById("updateName").value = document.getElementById("myTable").rows[x].cells[1].innerText;
 		document.getElementById("updateCat").value = document.getElementById("myTable").rows[x].cells[2].innerText;
 		document.getElementById("updatePrice").value = document.getElementById("myTable").rows[x].cells[3].innerText;
@@ -286,7 +285,7 @@ input {
 <body onload="random_bg_color()">
 	<div class="navbar">
 		<div style:align="left">
-			<a href="StartUpPage">User</a>
+			<a href="DisplayProfile">User</a>
 		</div>
 		<div style:align="right">
 			<a href="StartUpCart">Cart</a> <a href="UserDisplay">LogOut</a> 
@@ -332,6 +331,7 @@ input {
 				out.print("<tr>");
 				Statement stmt = null;
 				Connection conn = null;
+				int ctr = 1;
 				try{
 				 	DbConnection util = new DbConnection();
 					conn = util.getConn();
@@ -343,13 +343,14 @@ input {
 						out.print("<td>" + rs.getString("CATEGORY") + "</td>");
 						out.print("<td>" + rs.getInt("PRICE") + "</td>");
 						out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("
-										+ rs.getInt("PID") + ")'>Update</button>");
+										+ ctr + ")'>Update</button>");
 						out.print("<button id='deleteButton'  type='button' class='button' onclick='pDelete("
 								+ rs.getInt("PID") + ")'>Delete</button><br></td>");
 
 							out.print("<td><button id='buyButton'  type='button' class='button' onclick='PdtBuyLocal("
 									+ rs.getInt("PID") + ")'>Purchase</button></td>");
 						out.print("</tr>");
+						ctr++;
 					}
 				}catch (Exception e) {
 					e.printStackTrace();

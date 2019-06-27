@@ -28,11 +28,16 @@ public class PdtDel extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+		try{
+			if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
 			response.sendRedirect("StartUpLogin");
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+			response.sendRedirect("StartUpLogin");
+		}
 		int id = Integer.parseInt(request.getParameter("ID"));
 		productService.delete(id);
-		RequestDispatcher userPage = request.getRequestDispatcher("PdtDisplay");
+		RequestDispatcher userPage = request.getRequestDispatcher("StartUpPageProduct");
 		userPage.forward(request, response);
 	}
 

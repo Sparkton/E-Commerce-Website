@@ -17,17 +17,22 @@ import javax.servlet.http.HttpSession;
 public class DisplayProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request,response);
+		doPost(request,response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+		try{
+			if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
 			response.sendRedirect("StartUpLogin");
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+			response.sendRedirect("StartUpLogin");
+		}
 		RequestDispatcher userPage;
 		if((boolean)sess.getAttribute("AdminAccess")==true) 
 			userPage = request.getRequestDispatcher("StartUpPage");
 		else 
-		userPage = request.getRequestDispatcher("jsp/Profile.jsp");
+			userPage = request.getRequestDispatcher("jsp/Profile.jsp");
 		
 		userPage.forward(request, response);
 		

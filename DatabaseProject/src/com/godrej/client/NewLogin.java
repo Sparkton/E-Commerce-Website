@@ -68,6 +68,7 @@ public class NewLogin extends HttpServlet {
 			}
 			else {
 				System.out.println("Wrong Input/Password");
+				response.getWriter().println("prompt('Invalid Username/Password')");
 				RequestDispatcher rd = request.getRequestDispatcher("StartUpLogin");
 				rd.forward(request, response);
 			}

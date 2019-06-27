@@ -15,13 +15,15 @@ public class PdtDisplay extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Product pdt = new Product();
 
-    public PdtDisplay() {
-        super();
-    }
-
+	public PdtDisplay() {
+		super();
+	}
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Reached post");
 		response.sendRedirect("StartUpLogin");
 	}
-
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req, resp);
+	}
 }

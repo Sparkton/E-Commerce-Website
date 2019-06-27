@@ -1,4 +1,4 @@
-package com.godrej.client;
+  package com.godrej.client;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,8 +20,13 @@ public class PdtBuy extends HttpServlet {
 	int id;		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+		try{
+			if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
 			response.sendRedirect("StartUpLogin");
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+			response.sendRedirect("StartUpLogin");
+		}
 		id = Integer.parseInt(request.getParameter("PID"));
 		Connection conn = null;
 		Statement stmt = null;

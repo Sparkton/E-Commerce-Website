@@ -18,9 +18,18 @@ public class StartUpPageProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+		try{
+			if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
 			response.sendRedirect("StartUpLogin");
-		RequestDispatcher rd = request.getRequestDispatcher("jsp/Product.jsp");
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+			response.sendRedirect("StartUpLogin");
+		}
+		RequestDispatcher rd;
+		if((boolean)sess.getAttribute("AdminAccess") == true)
+			rd = request.getRequestDispatcher("jsp/Product.jsp");
+		else
+			rd = request.getRequestDispatcher("jsp/AllProduct.jsp");
 		rd.forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

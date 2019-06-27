@@ -25,8 +25,13 @@ public class UserDel extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sess = request.getSession();
-		if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
+		try{
+			if(!(boolean)sess.getAttribute("authenticated")==true || sess == null)
 			response.sendRedirect("StartUpLogin");
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+			response.sendRedirect("StartUpLogin");
+		}
 		int UserId = Integer.parseInt(request.getParameter("ID"));
 		userService.delete(UserId);
 		RequestDispatcher userPage = request.getRequestDispatcher("UserDisplay");
