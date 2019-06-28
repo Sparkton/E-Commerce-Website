@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.godrej.service.UserService;
 import com.godrej.serviceimpl.UserServiceImpl;
-
+/**
+ * Servlet page that leads to Manage Products for Admin Access
+ * @author akashdy
+ *
+ */
 @WebServlet("/UserUpdate")
 public class UserUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+/**
+ * Servlet that leads to page for normal users which shows all products and purchase options
+ * @author akashdy
+ *
+ */
 @WebServlet("/StartUpAllProducts")
 public class StartUpAllProducts extends HttpServlet {
 	private static final long serialVersionUID = 1L;

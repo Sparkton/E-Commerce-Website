@@ -146,8 +146,7 @@ label {
 	<br>
 	<div class="container-fluid">
 		<div class="row">
-			<form action="UserAdd" id="UserForm" method="post" autocomplete="off">
-				onsubmit="return validateForm()">
+			<form action="UserAdd" id="UserForm" method="post" autocomplete="off" onsubmit="return validateForm()">
 				<h4 style="text-align: -webkit-center;">User Form</h4>
 				<div class="form-group">
 					<table>

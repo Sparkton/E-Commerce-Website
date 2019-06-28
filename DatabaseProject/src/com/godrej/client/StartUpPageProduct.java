@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Redirector
+ * Servlet that leads to Manage Producs page for admin access
+ * @author akashdy
+ *
  */
 @WebServlet("/StartUpPageProduct")
 public class StartUpPageProduct extends HttpServlet {

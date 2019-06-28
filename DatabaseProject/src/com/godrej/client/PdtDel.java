@@ -13,6 +13,11 @@ import javax.servlet.http.HttpSession;
 import com.godrej.service.ProductService;
 import com.godrej.serviceimpl.ProductServiceImpl;
 
+/**
+ * Servlet that accesses database to delete product
+ * @author akashdy
+ *
+ */
 @WebServlet("/PdtDel")
 public class PdtDel extends HttpServlet {
 	private static final long serialVersionUID = 1L;

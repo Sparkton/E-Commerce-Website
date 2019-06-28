@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.godrej.util.DbConnection;
 
-
+/**
+ * Example database
+ * @author akashdy
+ *
+ */
 @WebServlet("/Test")
 public class TrialDatabase extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -13,7 +13,11 @@ import javax.servlet.http.HttpSession;
 import com.godrej.service.ProductService;
 import com.godrej.serviceimpl.ProductServiceImpl;
 
-
+/**
+ * Servlet that accesses database and updates product
+ * @author akashdy
+ *
+ */
 @WebServlet("/PdtUpdate")
 public class PdtUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;

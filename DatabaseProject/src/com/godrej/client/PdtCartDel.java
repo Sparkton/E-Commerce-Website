@@ -13,7 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import com.godrej.util.DbConnection;
 
-
+/**
+ * Servlet that accesses database to delete product from cart
+ * @author akashdy
+ *
+ */
 @WebServlet("/PdtCartDel")
 public class PdtCartDel extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.godrej.util.DbConnection;
-
+/**
+ * Servlet that accesses database to make others admin, can only be acccessed by other admin
+ * @author akashdy
+ *
+ */
 @WebServlet("/MakeAdmin")
 public class MakeAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;

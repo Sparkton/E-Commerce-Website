@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class DisplaySingle
+ * Servlet implementation class DisplaySingle that leads to logOut
  */
 @WebServlet("/DisplayProfile")
 public class DisplayProfile extends HttpServlet {

@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.godrej.util.DbConnection;
-
+/**
+ * Servlet that accesses database to insert products into cart
+ * @author akashdy
+ *
+ */
 @WebServlet("/PdtBuy")
 public class PdtBuy extends HttpServlet {
 	private static final long serialVersionUID = 1L;

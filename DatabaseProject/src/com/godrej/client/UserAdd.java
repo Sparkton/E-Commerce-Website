@@ -13,7 +13,11 @@ import com.godrej.model.Address;
 import com.godrej.model.User;
 import com.godrej.service.UserService;
 import com.godrej.serviceimpl.UserServiceImpl;
-
+/**
+ * Servlet to add users into database
+ * @author akashdy
+ *
+ */
 @WebServlet("/UserAdd")
 public class UserAdd extends HttpServlet{
 	private static final long serialVersionUID = 1L;

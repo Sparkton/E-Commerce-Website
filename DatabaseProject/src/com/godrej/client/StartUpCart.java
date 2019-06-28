@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+/**
+ * Servlet that leads to cart page which shows products purchased
+ * @author akashdy
+ *
+ */
 @WebServlet("/StartUpCart")
 public class StartUpCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;

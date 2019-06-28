@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.godrej.model.Product;
 
+/**
+ * Of no Use anymore
+ * @author akashdy
+ *
+ */
 @WebServlet("/PdtDisplay")
 public class PdtDisplay extends HttpServlet {
 	private static final long serialVersionUID = 1L;

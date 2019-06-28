@@ -12,7 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import com.godrej.service.UserService;
 import com.godrej.serviceimpl.UserServiceImpl;
-
+/**
+ * Servlet that deletes users
+ * @author akashdy
+ *
+ */
 @WebServlet("/UserDel")
 public class UserDel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
