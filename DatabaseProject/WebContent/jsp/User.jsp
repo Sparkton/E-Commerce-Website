@@ -15,7 +15,6 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" type="text/css" href="../DatabaseProject/jsp/css/styles.css"> -->
 
 <script>
 	function uDelete(x) {

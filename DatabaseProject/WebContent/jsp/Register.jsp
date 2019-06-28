@@ -157,7 +157,7 @@ label {
 						</tr>
 						<tr>
 							<td><label>Password : </label></td>
-							<td><input type="text" id="passIn" name="passIn"></td>
+							<td><input type="password" id="passIn" name="passIn"></td>
 						</tr>
 						<tr>
 							<td><label>State : </label></td>

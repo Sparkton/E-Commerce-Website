@@ -33,8 +33,8 @@ public class UserAdd extends HttpServlet{
 		address.setPinCode(Integer.parseInt(request.getParameter("pinIn")));
 		user.setAddress(address);
 		userService.insert(user);
-		userService.display();
-		RequestDispatcher userPage = request.getRequestDispatcher("UserDisplay");//html/User.html);
+		//userService.display();
+		RequestDispatcher userPage = request.getRequestDispatcher("DisplayProfile");//html/User.html);
 		userPage.forward(request, response);
 	}
 	@Override

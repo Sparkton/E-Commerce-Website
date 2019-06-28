@@ -37,7 +37,7 @@ public class NewLogin extends HttpServlet {
 			DbConnection util = new DbConnection();
 			conn = util.getConn();
 			stmt = conn.createStatement();
-			String sql = "select  * from Login where EMAIL = '"+uName+"' AND PASS = '"+uPass+"'";
+			String sql = "select * from Login where EMAIL = '"+uName+"' AND PASS = '"+uPass+"'";
 			int i = stmt.executeUpdate(sql);
 			if(i==1){
 				ResultSet rs = stmt.executeQuery("select * from Users where EMAIL = '"+uName+"' AND PASS = '"+uPass+"'");

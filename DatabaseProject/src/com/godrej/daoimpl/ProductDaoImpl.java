@@ -167,17 +167,17 @@ public class ProductDaoImpl implements ProductDao{
 				switch(option)
 				{
 				case 1:
-					ps = conn.prepareStatement("UPDATE users SET NAME = ? WHERE USERID = ?");
+					ps = conn.prepareStatement("UPDATE PRODUCT SET NAME = ? WHERE PID = ?");
 					ps.setString(1, s);
 //					product.setProduct_Name(s);
 					break;
 				case 2:
-					ps = conn.prepareStatement("UPDATE users SET CATEGORY = ? WHERE USERID = ?");
+					ps = conn.prepareStatement("UPDATE PRODUCT SET CATEGORY = ? WHERE PID = ?");
 					ps.setString(1, s);
 //					product.setProduct_Cat(s);
 					break;
 				case 3:
-					ps = conn.prepareStatement("UPDATE users SET PRICE = ? WHERE USERID = ?");
+					ps = conn.prepareStatement("UPDATE PRODUCT SET PRICE = ? WHERE PID = ?");
 					ps.setInt(1, Integer.parseInt(s));
 //					product.setProduct_Price(Integer.parseInt(s));
 					break;

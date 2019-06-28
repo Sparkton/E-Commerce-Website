@@ -209,15 +209,24 @@ public class UserDaoImpl implements UserDao{
 			if(stmt.executeUpdate("select * from Users") >0)
 			{
 				PreparedStatement ps = null;
+				PreparedStatement ps1 = null;
 				switch(option)
 				{
 				case 1:
 					ps = conn.prepareStatement("UPDATE USERS SET EMAIL = ? WHERE USERID = ?");
 					ps.setString(1, s);
+					ps1 = conn.prepareStatement("Update Login SET EMAIL = ? WHERE EMAIL = (SELECT EMAIL FROM USERS WHERE userid = ?)");
+					ps1.setString(1, s);
+					ps1.setInt(2, id);
+					ps1.executeUpdate();
 					break;
 				case 2:
 					ps = conn.prepareStatement("UPDATE USERS SET PASS = ? WHERE USERID = ?");
 					ps.setString(1, s);
+					ps1 = conn.prepareStatement("Update Login SET PASS = ? WHERE EMAIL = (SELECT EMAIL FROM USERS WHERE userid = ?)");
+					ps1.setString(1, s);
+					ps1.setInt(2, id);
+					ps1.executeUpdate();
 					break;
 				case 3:
 					ps = conn.prepareStatement("UPDATE USERS SET STATE = ? WHERE USERID = ?");
