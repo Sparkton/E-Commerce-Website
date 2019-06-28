@@ -146,18 +146,18 @@ label {
 	<br>
 	<div class="container-fluid">
 		<div class="row">
-			<form action="UserAdd" id="UserForm" method="post"
+			<form action="UserAdd" id="UserForm" method="post" autocomplete="off">
 				onsubmit="return validateForm()">
 				<h4 style="text-align: -webkit-center;">User Form</h4>
 				<div class="form-group">
 					<table>
 						<tr>
 							<td><label>Email Id : </label></td>
-							<td><input type="text" id="nameIn" name="nameIn"></td>
+							<td><input type="text" id="nameIn" name="nameIn" autocomplete="false" ></td>
 						</tr>
 						<tr>
 							<td><label>Password : </label></td>
-							<td><input type="password" id="passIn" name="passIn"></td>
+							<td><input type="password" id="passIn" name="passIn" autocomplete="false"></td>
 						</tr>
 						<tr>
 							<td><label>State : </label></td>

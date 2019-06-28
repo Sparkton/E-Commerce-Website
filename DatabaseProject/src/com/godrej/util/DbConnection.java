@@ -2,7 +2,11 @@ package com.godrej.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
+/**
+ * Simple class to establish connection with DataBase
+ * @author akashdy
+ *
+ */
 public class DbConnection {
 	final String JDBC_Driver = "oracle.jdbc.driver.OracleDriver";
 	final String USER = "system";
