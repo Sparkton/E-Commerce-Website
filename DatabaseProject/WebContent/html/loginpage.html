@@ -76,11 +76,19 @@ h2 {
     border: none;
     outline: none;
     color: #fff;
-    background: #03a9f4;
+    /*background: #03a9f4;*/
+    background-color: #28a745;
+    background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
+    width: 60%;
 }
+
+.buttons {
+	text-align: center;
+}
+
 * {
 user-select: none;
 -moz-user-select: none;
@@ -94,6 +102,7 @@ user-select: none;
   background-color: #4285f4;
   border-radius: 2px;
   box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
+  margin: auto;
 }
   .google-icon-wrapper {
     position: absolute;
@@ -146,11 +155,13 @@ user-select: none;
                     <input type="password" name="" required="">
                     <label>password</label>
                 </div>
-                <input type="submit" name="" value="Log In">
-                <br><br>
-                <input type="submit" name="" value="Register">
-                <br><br>
-                <input type="submit" name="" value="Reset Password">
+                <div class="buttons">
+	                <input type="submit" name="" value="Log In">
+	                <br><br>
+	                <input type="submit" name="" value="Register">
+	                <br><br>
+	                <input type="submit" name="" value="Reset Password">
+	            </div>
             </form>
             <div class="google-btn">
   				<div class="google-icon-wrapper">
