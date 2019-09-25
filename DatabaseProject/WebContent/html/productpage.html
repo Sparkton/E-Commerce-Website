@@ -1,0 +1,331 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="ISO-8859-1">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<style>
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+}
+body {
+	color: #000000;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-width: 0;
+	margin-height: 0;
+	background-color: #A3A6BA;
+	text-align: center;
+}
+p {
+	background-color: DodgerBlue;
+	height: 50px;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 3px 5px 9px 1px black;
+}
+.button {
+	background-color: #8a4caf;
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+form {
+	margin: auto;
+	width: 100%;
+	text-align: "center"
+}
+.navbar {
+	overflow: hidden;
+	background-color: #333;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+.navbar a {
+	float: left;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+.ak {
+	margin-right: 15px;
+	margin-top: 10px;
+	background-color: #8a4caf;
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+input {
+	vertical-align: middle;
+	display: flex;
+}
+.open-button {
+	background-color: #555;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	opacity: 0.8;
+	position: fixed;
+	bottom: 23px;
+	right: 28px;
+	width: 280px;
+}
+.form-popup {
+	top: 0;
+	display: none;
+	position: fixed;
+	right: 40%;
+	border: 3px solid #f1f1f1;
+	z-index: 9;
+	width: 200px;
+	margin: 0 auto;
+}
+.form-container {
+	max-width: 300px;
+	padding: 10px;
+	background-color: white;
+}
+.form-container .btn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	margin-bottom: 10px;
+	opacity: 0.8;
+}
+.form-container .cancel {
+	background-color: red;
+}
+.Modal {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 9999;
+	width: 100%;
+	height: 100%;
+	padding-top: 100px;
+	background-color: black;
+	background-color: rgba(0, 0, 0, 0.4);
+	-webkit-transition: 0.5s;
+	overflow: auto;
+	transition: all 0.3s linear;
+}
+.is-blurred {
+	filter: blur(2px);
+	-webkit-filter: blur(2px);
+}
+.inputBox {
+    position: relative;
+}
+.inputBox input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+.inputBox label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s; 
+}
+.inputBox input:focus ~ label,
+.inputBox input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+}
+
+</style>
+</head>
+<body>
+	<div class="navbar">
+		<div style:align="left">
+			<a href="DisplayProfile">User</a>
+		</div>
+		<div style:align="right">
+			<a href="StartUpCart">Cart</a> <a href="UserDisplay">LogOut</a> 
+		</div>
+	</div>
+	<br><br><br>
+	<div class="container" id="myCont">
+		<h1>Product Data</h1>
+		<!-- <table style="width=20%" id="myTable"> -->
+
+		<table class="container" id="myTable" >
+			<tbody id="tbody">
+			<thead>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Category</th>
+				<th>Price</th>
+				<th>Actions</th>
+				<th>Buy</th>
+			</thead>
+			<%@page import="com.godrej.model.Product"%>
+			<%@page import="com.godrej.service.ProductService"%>
+			<%@page import="com.godrej.serviceimpl.ProductServiceImpl"%>
+			<%@page import="java.util.ArrayList"%>
+			<%@page import="com.godrej.util.DbConnection"%>
+			<%@page import="java.sql.*"%>
+			<%
+				
+			/*ArrayList<Product> list = new ArrayList<Product>(pdtService.getList());
+				 for (Product i : list) {
+					out.print("<tr>");
+					out.print("<td>" + i.getProduct_Id() + "</td>");
+					out.print("<td>" + i.getProduct_Name() + "</td>");
+					out.print("<td>" + i.getProduct_Cat() + "</td>");
+					out.print("<td>" + i.getProduct_Price() + "</td>");
+					out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='btn-primary' onclick='openForm("
+							+ i.getProduct_Id() + ")'>Update</button>");
+					out.print("<td><button id='addButton' style='margin-right:16px' type='submit' class='btn-success' onclick='addPdt("
+							+ i.getProduct_Id() + ")'>Update</button>");
+					out.print("<button id='deleteButton'  type='button' class='btn-danger' onclick='pDelete(" + i.getProduct_Id()
+							+ ")'>Delete</button><br></td></tr>");
+				} */
+				out.print("<tr>");
+				Statement stmt = null;
+				Connection conn = null;
+				int ctr = 1;
+				try{
+				 	DbConnection util = new DbConnection();
+					conn = util.getConn();
+					stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery("select * from Product ORDER BY PID ASC");
+					while (rs.next()) {
+						out.print("<td>" + rs.getInt("PID") + "</td>");
+						out.print("<td>" + rs.getString("NAME") + "</td>");
+						out.print("<td>" + rs.getString("CATEGORY") + "</td>");
+						out.print("<td>" + rs.getInt("PRICE") + "</td>");
+						out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='btn-primary' onclick='openForm("
+										+ ctr + ")'>Update</button>");
+						out.print("<button id='deleteButton'  type='button' class='btn-danger' onclick='pDelete("
+								+ rs.getInt("PID") + ")'>Delete</button><br></td>");
+							out.print("<td><button id='buyButton'  type='button' class='btn-success' onclick='PdtBuyLocal("
+									+ rs.getInt("PID") + ")'>Purchase</button></td>");
+						out.print("</tr>");
+						ctr++;
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (conn != null) {
+							conn.close();
+						}
+						if (stmt != null) {
+							stmt.close();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			%>
+
+			</tbody>
+		</table>
+
+		<br> <br>
+
+		<div class="row">
+			<div align="left" class="col-md">
+				<form method="post" onsubmit="return validateForm()">
+					<!-- <label>ID : <input type="text" name="serialIn" id="serialIn"></label> <br> -->
+					<label>Name : </label> <input type="text" name="nameIn" id="nameIn"> <br>
+					<label>Category : </label> <input type="text" name="catIn" id="catIn"><br>
+					<label>Price : </label> <input type="text" name="priceIn" id="priceIn">
+					<br>
+					<button type="submit" class="button" formaction="PdtAdd">CREATE</button>
+					<br> <br> <br>
+				</form>
+			</div>
+		</div>
+		<div id="myModal" class="Modal">
+			<div class="form-popup" id="myForm">
+				<form action="PdtUpdate" class="form-container" method="post" onsubmit = "return pUpdate()">
+					<h1>Update</h1>
+					<label><b>ID</b></label> 
+					<input type="text" name="updateID" id="updateId" readonly><label><b>Name</b></label> 
+					<input type="text" name="updateName" id="updateName"><label><b>Category</b></label>
+					<input type="text" name="updateCat" id="updateCat"> <label><b>Price</b></label>
+					<input type="text" name="updatePrice" id="updatePrice">
+
+					<button type="submit" class="btn" onclick="closeForm()">Update</button>
+					<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
