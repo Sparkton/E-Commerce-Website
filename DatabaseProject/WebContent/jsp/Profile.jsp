@@ -97,20 +97,19 @@ function validateFormUpdate() {
 	return true;
 }
 </script>
-<style>
-table {
-	border: 1px solid black;
+<style>table {
 	border-collapse: collapse;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
 	background-color: white;
+	border:1px solid black;
+	box-shadow: 0 15px 25px rgba(0,0,0,.5);
+    border-radius: 10px;
 }
-
 thead {
-	background-color: tomato;
+	background-color: #fff;
 }
-
+tbody tr:hover {
+	background-color: rgba(25,25,25,0.3);
+}
 body {
 	color: #000000;
 	margin-left: 0;
@@ -121,6 +120,8 @@ body {
 	margin-height: 0;
 	background-color: #A3A6BA;
 	text-align: center;
+	background: url("https://images.pexels.com/photos/593322/pexels-photo-593322.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+	font-family: courier;
 }
 
 p {
@@ -133,15 +134,26 @@ p {
 }
 
 .button {
-	background-color: #8a4caf;
-	border: none;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
+	-moz-box-shadow: 0px 0px 0px 0px #3dc21b;
+	-webkit-box-shadow: 0px 0px 0px 0px #3dc21b;
+	box-shadow: 0px 0px 0px 0px #3dc21b;
+	background-color:#bd4446;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #b01c1f;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:3px 10px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
 }
-
+.button:hover {
+	background-color:#b01c1f;
+}
 form {
 	margin: auto;
 	width: 100%;
@@ -180,7 +192,49 @@ input {
 	vertical-align: middle;
 	display: flex;
 }
-
+.form-group {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 40px;
+    background: rgba(0,0,0,.7);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.5);
+    border-radius: 10px;
+}
+.inputBox {
+	position: relative;
+}
+.inputBox input {
+	width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+.inputBox label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s; 
+}
+input:focus ~ label,
+input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+}
 .open-button {
 	background-color: #555;
 	color: white;
@@ -245,6 +299,65 @@ input {
 .is-blurred {
 	filter: blur(2px);
 	-webkit-filter: blur(2px);
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked+.slider {
+	background-color: #2196F3;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
 }
 </style>
 
