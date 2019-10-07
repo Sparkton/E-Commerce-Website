@@ -13,6 +13,15 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
+body {
+	font-family: courier;
+    background: url("https://outlane.co/wp-content/uploads/2018/03/pattern.png");
+    background-size: cover;
+}
+h2 {
+	color: #fff;
+	font-weight: bold;
+}
 .navbar {
 	overflow: hidden;
 	background-color: #333;
@@ -20,7 +29,6 @@
 	top: 0;
 	width: 100%;
 }
-
 .navbar a {
 	float: left;
 	display: block;
@@ -29,60 +37,86 @@
 	padding: 14px 16px;
 	text-decoration: none;
 }
-
 form {
 	margin: auto;
 	text-align: "center" text-align: -webkit-center
 }
-
-.button {
-	background-color: #8a4caf;
-	border: none;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
+.form-group {
+	position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 40px;
+    background: rgba(0,0,0,.7);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.5);
+    border-radius: 10px;
 }
 
 .img {
 	position: relative;
 	float: left;
 	width: auto;
-	height: 400px;
+	height: 500px;
 	background-position: 100% 100%;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-
-input {
-	vertical-align: right;
-	display: flex;
+.form-group .inputBox {
+	position: relative;
 }
-
+h4 {
+	margin-bottom: 550px;
+	float: left;
+	color: #fff;
+}
+input {
+	width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
 label {
-	vertical-align: left;
-	display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s; 
+}
+input:focus ~ label,
+input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+}
+.button {
+	margin-top: 10px;
+	margin-left: 80px;
+	background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    /*background: #03a9f4;*/
+    background-color: #28a745;
+    background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 55%;
 }
 </style>
 <script>
-	$(document).ready(function() {
-		$("input").focus(function() {
-			$(this).css("background-color", "#cccccc");
-		});
-		$("input").blur(function() {
-			$(this).css("background-color", "#ffffff");
-		});
-	})
-	function random_bg_color() {
-		var x = Math.floor(Math.random() * 256);
-		var y = Math.floor(Math.random() * 256);
-		var z = Math.floor(Math.random() * 256);
-		var bgColor = "rgb(" + x + "," + y + "," + z + ")";
-		console.log(bgColor);
-		document.body.style.background = bgColor;
-	}
-	function validateForm() {
+		function validateForm() {
 		var name = $('#nameIn').val();
 		var pass = $('#passIn').val();
 		var pin = $('#pinIn').val();
@@ -134,6 +168,7 @@ label {
 		<div style="align:left">
 			<a href="StartUpLogin">Login</a>
 		</div>
+		<h2 align="center">Registration Page</h2>
 		<div style="align:right">
 			<a href="StartUpRegister">Register</a>
 		</div>
@@ -141,42 +176,43 @@ label {
 	<br>
 	<br>
 	<br>
-	<h3 align="center">Registration Page</h3>
+	
 	<br>
 	<br>
 	<div class="container-fluid">
+	<br><br><br><br><br><br>
 		<div class="row">
+			<div class="col-6">
+			<!--<h4 style="text-align: -webkit-center;">User Form</h4>-->
 			<form action="UserAdd" id="UserForm" method="post" autocomplete="off" onsubmit="return validateForm()">
-				<h4 style="text-align: -webkit-center;">User Form</h4>
+				<br>
 				<div class="form-group">
-					<table>
-						<tr>
-							<td><label>Email Id : </label></td>
-							<td><input type="text" id="nameIn" name="nameIn" autocomplete="false" ></td>
-						</tr>
-						<tr>
-							<td><label>Password : </label></td>
-							<td><input type="password" id="passIn" name="passIn" autocomplete="false"></td>
-						</tr>
-						<tr>
-							<td><label>State : </label></td>
-							<td><input type="text" id="stateIn" name="stateIn"></td>
-						</tr>
-						<tr>
-							<td><label>City : </label></td>
-							<td><input type="text" id="cityIn" name="cityIn"></td>
-						</tr>
-						<tr>
-							<td><label>Pin : </label></td>
-							<td><input type="text" id="pinIn" name="pinIn"></td>
-						</tr>
-					</table>
+					<div class="inputBox">
+						<input type="text" id="nameIn" name="nameIn" autocomplete="off" required="">
+						<label>Email Id</label>
+					</div>
+					<div class="inputBox">
+						<input type="password" id="passIn" name="passIn" autocomplete="off" required="">
+						<label>Password</label>
+					</div>
+					<div class="inputBox">
+						<input type="text" id="stateIn" name="stateIn" required="">
+						<label>State</label>
+					</div>
+					<div class="inputBox">
+						<input type="text" id="cityIn" name="cityIn" required="">
+						<label>City</label>
+					</div>
+					<div class="inputBox">
+						<input type="text" id="pinIn" name="pinIn" required="">
+						<label>Pin</label>
+					</div>
 					<button type="submit" class="button"
-						onsubmit="return validateForm()">SUBMIT</button>
+					onsubmit="return validateForm()">Submit</button>
 				</div>
 				<br> <br>
 			</form>
-
+			</div>
 
 			<div class="col-6">
 				<div id="cara" class="carousel slide" data-ride="carousel">
@@ -186,15 +222,15 @@ label {
 						<li data-target="#cara" data-slide-to="2"></li>
 					</ul>
 
-					<div class="carousel-inner">
+					<div class="carousel-inner" style="align:auto">
 						<div class="carousel-item active">
-							<img class="img" src="/images/cara0.jpg" alt="Pic1">
+							<img class="img" src="https://blogs.adobe.com/digitalmarketing/wp-content/uploads/2015/11/ecommerce-1.png" alt="Pic1">
 						</div>
 						<div class="carousel-item ">
-							<img class="img" src="images/cara1.jpg" alt="Pic2">
+							<img class="img" src="https://image.shutterstock.com/image-photo/women-shopping-summer-she-using-260nw-1027446970.jpg" alt="Pic2">
 						</div>
 						<div class="carousel-item ">
-							<img class="img" src="images/cara2.jpg" alt="Pic3">
+							<img class="img" src="https://thejibe.com/sites/default/files/article/images/B2B-eCommerce-2016-Trends.jpg" alt="Pic3">
 						</div>
 					</div>
 
