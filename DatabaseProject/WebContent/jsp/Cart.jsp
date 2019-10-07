@@ -48,16 +48,6 @@
 
 	function random_bg_color() {
 
-		/* if((boolean)request.getSession().getAttribute()!== true)
-			response.sendRedirect("UserDisplay"); */
-		var x = Math.floor(Math.random() * 256);
-		var y = Math.floor(Math.random() * 256);
-		var z = Math.floor(Math.random() * 256);
-		var bgColor = "rgb(" + x + "," + y + "," + z + ")";
-		console.log(bgColor);
-
-		document.body.style.background = bgColor; //body.style.
-
 		if ($('#myTable tr').length == 1)
 			$('#myTable').css("display", "none");
 		else
@@ -69,12 +59,40 @@
 table {
 	border-collapse: collapse;
 	background-color: white;
+	border:1px solid black;
+	box-shadow: 0 15px 25px rgba(0,0,0,.5);
+    border-radius: 10px;
 }
-
 thead {
-	background-color: tomato;
+	background-color: #fff;
 }
-
+body {
+	color: #000000;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-width: 0;
+	margin-height: 0;
+	background-color: #A3A6BA;
+	text-align: center;
+	background: url("https://images.pexels.com/photos/593322/pexels-photo-593322.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+	font-family: courier;
+}
+h1 {
+	color: #fff;
+}
+p {
+	background-color: DodgerBlue;
+	height: 50px;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 3px 5px 9px 1px black;
+}
+tbody tr:hover {
+	background-color: rgba(25,25,25,0.3);
+}
 body {
 	color: #000000;
 	margin-left: 0;
@@ -86,26 +104,27 @@ body {
 	background-color: #A3A6BA;
 	text-align: center;
 }
-
-p {
-	background-color: DodgerBlue;
-	height: 50px;
-	width: 50%;
-	margin-left: auto;
-	margin-right: auto;
-	box-shadow: 3px 5px 9px 1px black;
-}
-
 .button {
-	background-color: #8a4caf;
-	border: none;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
+	-moz-box-shadow: 0px 0px 0px 0px #3dc21b;
+	-webkit-box-shadow: 0px 0px 0px 0px #3dc21b;
+	box-shadow: 0px 0px 0px 0px #3dc21b;
+	background-color:#bd4446;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #b01c1f;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:3px 10px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
 }
-
+.button:hover {
+	background-color:#b01c1f;
+}
 form {
 	margin: auto;
 	width: 100%;
@@ -226,10 +245,10 @@ input {
 	<br>
 	<br>
 	<div class="container" id="myCont">
-		<h1>Cart</h1>
+		<h1><strong>Cart</strong></h1>
 		<!-- <table style="width=20%" id="myTable"> -->
 
-		<table class="table table-striped" id="myTable">
+		<table class="table" id="myTable">
 			<tbody id="tbody">
 			<thead>
 				<th>ID</th>
