@@ -95,24 +95,9 @@
 		}
 	}
 	var value = 0;
-	$(document).ready(function() {
-		$("input").focus(function() {
-			$(this).css("background-color", "#cccccc");
-		});
-		$("input").blur(function() {
-			$(this).css("background-color", "#ffffff");
-		});
-	})
+	
 
 	function random_bg_color() {
-
-		var x = Math.floor(Math.random() * 256);
-		var y = Math.floor(Math.random() * 256);
-		var z = Math.floor(Math.random() * 256);
-		var bgColor = "rgb(" + x + "," + y + "," + z + ")";
-		console.log(bgColor);
-
-		document.body.style.background = bgColor; //body.style.
 
 		if ($('#myTable tr').length == 1)
 			$('#myTable').css("display", "none");
@@ -211,12 +196,16 @@
 table {
 	border-collapse: collapse;
 	background-color: white;
+	border:1px solid black;
+	box-shadow: 0 15px 25px rgba(0,0,0,.5);
+    border-radius: 10px;
 }
-
 thead {
-	background-color: tomato;
+	background-color: #fff;
 }
-
+tbody tr:hover {
+	background-color: rgba(25,25,25,0.3);
+}
 body {
 	color: #000000;
 	margin-left: 0;
@@ -227,6 +216,8 @@ body {
 	margin-height: 0;
 	background-color: #A3A6BA;
 	text-align: center;
+	background: url("https://images.pexels.com/photos/593322/pexels-photo-593322.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+	font-family: courier;
 }
 
 p {
@@ -239,15 +230,26 @@ p {
 }
 
 .button {
-	background-color: #8a4caf;
-	border: none;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
+	-moz-box-shadow: 0px 0px 0px 0px #3dc21b;
+	-webkit-box-shadow: 0px 0px 0px 0px #3dc21b;
+	box-shadow: 0px 0px 0px 0px #3dc21b;
+	background-color:#bd4446;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #b01c1f;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:3px 10px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
 }
-
+.button:hover {
+	background-color:#b01c1f;
+}
 form {
 	margin: auto;
 	width: 100%;
@@ -286,7 +288,49 @@ input {
 	vertical-align: middle;
 	display: flex;
 }
-
+.form-group {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 40px;
+    background: rgba(0,0,0,.7);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.5);
+    border-radius: 10px;
+}
+.inputBox {
+	position: relative;
+}
+.inputBox input {
+	width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+.inputBox label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s; 
+}
+input:focus ~ label,
+input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+}
 .open-button {
 	background-color: #555;
 	color: white;
@@ -419,6 +463,7 @@ input:checked+.slider:before {
 		<div style:align="left">
 			<a href="StartUpPageProduct">Product</a>
 		</div>
+		<h1 style="color:#fff">User Data</h1>
 		<div style:align="right">
 			<a href="UserDisplay">LogOut</a> 
 		</div>
@@ -427,10 +472,9 @@ input:checked+.slider:before {
 	<br>
 	<br>
 	<div class="container" id="myCont">
-		<h1>User Data</h1>
 		<!-- <table style="width=20%" id="myTable"> -->
 
-		<table class="table table-striped" id="myTable">
+		<table class="table " id="myTable">
 			<thead>
 				<th>ID</th>
 				<th>Name</th>
@@ -479,14 +523,17 @@ input:checked+.slider:before {
 						out.print("<td>" + rs.getString("STATE") + "</td>");
 						out.print("<td>" + rs.getString("CITY") + "</td>");
 						out.print("<td>" + rs.getInt("PIN") + "</td>");
-						out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("+ctr+");'>Update</button>"); //document.getElementsByTagName(\"tr\").rowIndex
+						out.print("<td><button id='updateButton' style='margin-right:16px' type='submit' class='button' onclick='openForm("+ctr+");'>Update</button>"); 
+//document.getElementsByTagName(\"tr\").rowIndex
 						//+ rs.getInt("USERID")
 						out.print("<button id='deleteButton'  type='button' class='button' onclick='uDelete("+rs.getInt("USERID")+")'>Delete</button><br></td>");
 
 						if (rs.getInt("isAdmin") == 1) {
-							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("+rs.getInt("USERID")+",0)' checked></input><span class='slider round'></span></label></td>");
+							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' 
+onclick='AdminCheck("+rs.getInt("USERID")+",0)' checked></input><span class='slider round'></span></label></td>");
 						} else
-							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' onclick='AdminCheck("+rs.getInt("USERID")+" ,1)'></input><span class='slider round'></span></label></td>");
+							out.print("<td><label class='switch'><input id='adminCheckBox' type='checkBox' style='display: inline-flex' class='form-check-input' 
+onclick='AdminCheck("+rs.getInt("USERID")+" ,1)'></input><span class='slider round'></span></label></td>");
 						out.print("</tr>");
 						ctr++;
 					}
@@ -507,40 +554,38 @@ input:checked+.slider:before {
 				//usersList.add(userService);
 			%>
 		</table>
+		<br><br><br><br><br><br><br><br><br><br><br><br>
 		<div align="center" class="col-md">
-			<form method="post" action="UserAdd" onsubmit="return validateForm();">
+			
 				<div class="form-group">
-					<table>
-						<tr>
-							<td><label>Email: </label></td>
-							<td><input type="text" name="nameIn" id="nameIn"></td>
-						</tr>
-						<tr>
-							<td><label>Password: </label></td>
-							<td><input type="text" name="passIn" id="passIn"></td>
-						</tr>
-						<tr>
-							<td><label>State : </label></td>
-							<td><input type="text" name="stateIn" id="stateIn"></td>
-						</tr>
-						<tr>
-							<td><label>City: </label></td>
-							<td><input type="text" name="cityIn" id="cityIn"></td>
-						</tr>
-						<tr>
-							<td><label>PinCode: </label></td>
-							<td><input type="number" name="pinIn" id="pinIn"></td>
-						</tr>
-					</table>
-					<button type="submit" class="button">CREATE</button>
+				<form method="post" action="UserAdd" onsubmit="return validateForm();">
+						<div class="inputBox">
+							<input type="text" name="nameIn" id="nameIn" required="" autocomplete="off"><label>Email: </label>
+						</div>
+						<div class="inputBox">
+							<input type="text" name="passIn" id="passIn" required="" autocomplete="off"><label>Password: </label>
+						</div>
+						<div class="inputBox">
+							<input type="text" name="stateIn" id="stateIn" required="" autocomplete="off"><label>State : </label>
+						</div>
+						<div class="inputBox">
+							<input type="text" name="cityIn" id="cityIn" required="" autocomplete="off"><label>City: </label>
+						</div>
+						<div class="inputBox">
+							<input type="number" name="pinIn" id="pinIn" required="" autocomplete="off"><label>PinCode: </label>
+						</div>
+					<br>
+					<br>
+					<button type="submit" class="button">Create</button>
+				</form>
 				</div>
-			</form>
+			
 		</div>
 		<div id="myModal" class="Modal">
 			<div class="form-popup" id="myForm">
 				<div>
 					<form action="UserUpdate" class="form-container" method="post"
-						onsubmit="return validateFormUpdate()">
+						onsubmit="return validateFormUpdate()" autocomplete = "off">
 						<h1>Update</h1>
 
 						<label><b>ID</b></label> 
