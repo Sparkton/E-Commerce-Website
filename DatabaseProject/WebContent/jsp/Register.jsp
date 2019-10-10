@@ -44,7 +44,7 @@ form {
 .form-group {
 	position: absolute;
     top: 50%;
-    left: 30%;
+    left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
     padding: 40px;
@@ -55,13 +55,12 @@ form {
 }
 
 .img {
-	position: relative;
-	float: left;
-	width: auto;
+	
 	height: 500px;
-	background-position: 100% 100%;
+	width: 100%;
 	background-repeat: no-repeat;
 	background-size: cover;
+
 }
 .form-group .inputBox {
 	position: relative;
@@ -113,6 +112,16 @@ input:valid ~ label {
     cursor: pointer;
     border-radius: 5px;
     width: 55%;
+}
+.carousel-inner {
+	box-shadow: 0 15px 25px rgba(0,0,0,.5);
+}
+.vl {
+  border-left: 2px solid #ffffff;
+  height: 500px;
+  left: 50%;
+  margin-left: -3px;
+  top: 0;
 }
 </style>
 <script>
@@ -177,8 +186,6 @@ input:valid ~ label {
 	<br>
 	<br>
 	
-	<br>
-	<br>
 	<div class="container-fluid">
 	<br><br><br><br><br><br>
 		<div class="row">
@@ -213,8 +220,13 @@ input:valid ~ label {
 				<br> <br>
 			</form>
 			</div>
+			<div class="col-1">
+				<div class="vl">
 
-			<div class="col-6">
+				</div>
+			</div>
+
+			<div class="col-4">
 				<div id="cara" class="carousel slide" data-ride="carousel">
 					<ul class="carousel-indicators">
 						<li data-target="#cara" data-slide-to="0" class="active"></li>
@@ -222,15 +234,21 @@ input:valid ~ label {
 						<li data-target="#cara" data-slide-to="2"></li>
 					</ul>
 
-					<div class="carousel-inner" style="align:auto">
+					<div class="carousel-inner">
 						<div class="carousel-item active">
 							<img class="img" src="https://blogs.adobe.com/digitalmarketing/wp-content/uploads/2015/11/ecommerce-1.png" alt="Pic1">
 						</div>
 						<div class="carousel-item ">
-							<img class="img" src="https://image.shutterstock.com/image-photo/women-shopping-summer-she-using-260nw-1027446970.jpg" alt="Pic2">
+							<img class="img" src="https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Pic2">
 						</div>
 						<div class="carousel-item ">
 							<img class="img" src="https://thejibe.com/sites/default/files/article/images/B2B-eCommerce-2016-Trends.jpg" alt="Pic3">
+						</div>
+						<div class="carousel-item ">
+							<img class="img" src="https://cdn.pixabay.com/photo/2019/04/26/07/14/store-4156934_960_720.png" alt="Pic4">
+						</div>
+						<div class="carousel-item ">
+							<img class="img" src="https://cdn.pixabay.com/photo/2016/09/30/17/29/shopping-1705798_960_720.png" alt="Pic5">
 						</div>
 					</div>
 
