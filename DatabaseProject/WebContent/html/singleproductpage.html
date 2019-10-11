@@ -1,0 +1,139 @@
+<html>
+<!-- background: url("https://outlane.co/wp-content/uploads/2018/03/pattern.png");-->    
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <meta charset="utf-8">
+        <title>Product Page</title>
+        <style>
+        	body {
+    margin: 0;
+    padding: 0;
+    font-family: courier;
+    
+    background-size: cover;
+}
+
+h1	{
+	margin-top: 80px;
+	text-align: center;
+	color: #000;
+}
+
+h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  border: none;
+  color: #000;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+* {
+user-select: none;
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+}
+.description {
+    text-align: center;
+}
+.col-lg-6 {
+    text-align: center;
+}
+table {
+    text-align: center;
+    margin: auto;
+}
+img {
+    width: 90%;
+    margin-left: 10px;
+}
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+    </style>
+    </head>
+<html>    
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Features</a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+    </div>
+  </div>
+</nav>
+    	<div class="intro">
+    		<h1>Product Page</h1>
+    	</div>
+        <br><br>
+        <div class="row">
+            <div class="col-lg-6">
+                <img src="https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/024/510/438/original/508716_01.jpg.jpeg?1565388074" alt="Product Pic">
+                <br><br>
+                <p>WMNS AIR JORDAN 1 RETRO HIGH SATIN BLACK TOE</p>
+            </div>
+            <div class="col-lg-6">
+                <h4 class="description">Product Description</h4>
+                
+                <table class="table">
+                    <tr>
+                        <td>release date</td><td>1 jan 1999</td>
+                    </tr>
+                    <tr>
+                        <td>company</td><td>company name</td>
+                    </tr>
+                    <tr>
+                        <td>category</td><td>streetwear</td>
+                    </tr>
+                    <tr>
+                        <td>rating</td><td>8/8</td>
+                    </tr>
+                </table>
+                <button class="button" style="vertical-align:middle"><span>Buy </span></button>
+                <button class="button" style="vertical-align:middle"><span>Cart </span></button>
+            </div>
+        </div>
+    </body>
+</html>
