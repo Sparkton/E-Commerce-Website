@@ -20,6 +20,6 @@ Admin rights will be there for super users who check legitimacy of the product a
 
 [Navid Kagalwalla](https://github.com/NavidK27)
 
-[Preyas Hanche](https://github.com/Keshman77)
+[Preyas Hanche](https://github.com/Preyas77)
 
 Ayush Falor
