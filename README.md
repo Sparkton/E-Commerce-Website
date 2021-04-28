@@ -13,8 +13,3 @@ secure means and have it delivered to their doorstep. To make this happen, an ea
 make. We need a selection interface that allows users to go through the selection of products offered. We also need to
 develop an easy interface for vendors from which they can put products up for sale along with the product’s description.
 Admin rights will be there for super users who check legitimacy of the product and users.
-
-## Contributors 
-
-[Akash Dubey](https://github.com/Sparkton)
-
